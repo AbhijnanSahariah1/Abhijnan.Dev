@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhijnan | Student & Web Developer</title>
+    <link rel="stylesheet" href="portfolio1.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo">Abhijnan.dev</div>
+        <nav class="main-nav">
+            <ul class="nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="theme-toggle" aria-label="Toggle dark mode">
+                <i class="fas fa-sun"></i> </button>
+            <button class="menu-toggle" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <div class="mobile-menu" id="mobile-menu">
+        <button class="close-btn" aria-label="Close menu">&times;</button>
+        <a href="#hero" class="mobile-link">Home</a>
+        <a href="#about" class="mobile-link">About</a>
+        <a href="#projects" class="mobile-link">Projects</a>
+        <a href="#contact" class="mobile-link">Contact</a>
+    </div>
+
+    <section id="hero" class="hero-section">
+        <div class="hero-content">
+            <div class="hero-text fade-in-up">
+                <p class="greeting">Hey there, I'm</p>
+                <h1>Abhijnan.</h1>
+                <p class="subtitle">Student & Web Developer</p>
+                <a href="#projects" class="cta-button">See My Work <i class="fas fa-arrow-right"></i></a>
+                <a href="/path/to/your/resume.pdf" target="_blank" class="secondary-button">Download Resume</a>
+            </div>
+            <div class="profile-area slide-in-right">
+                <div class="profile-card">
+                    <img src="Abhijnan1.jpg" alt="Abhijnan's Profile Picture" class="profile-pic"> 
+                </div>
+            </div>
+        </div>
+        <a href="#about" class="scroll-down-arrow" aria-label="Scroll down to About Me">
+            <i class="fas fa-chevron-down"></i>
+        </a>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2 class="section-title reveal-item">About Me</h2>
+
+            <div class="about-content">
+                <p class="bio reveal-item">
+                    Hi! I'm **Abhijnan**, a 15-year-old high school student who loves building things on the web. I started coding because I was curious about how websites actually work, and now I can't stop creating! I enjoy making clean, easy-to-use websites and learning new technologies every day.
+                </p>
+
+                <div class="skills-box reveal-item">
+                    <h3>My Skills</h3>
+                    <div class="skills-grid">
+                        <span class="skill-tag">HTML5</span>
+                        <span class="skill-tag">CSS3</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">GitHub</span>
+                        <span class="skill-tag">VS Code</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="projects-section">
+        <div class="container">
+            <h2 class="section-title reveal-item">Cool Stuff I've Built</h2>
+
+            <div class="projects-grid">
+                <div class="project-card reveal-item">
+                    <h3 class="project-title">Simple To-Do App</h3>
+                    <p class="project-desc">A classic To-Do list built with vanilla JavaScript. It uses local storage to save tasks, even after you close the browser. Super useful!</p>
+                    <div class="project-tech-stack">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">LocalStorage</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://your-demo-link.com/todo" target="_blank" class="live-demo-btn">
+                            <i class="fas fa-external-link-alt"></i> Live Demo
+                        </a>
+                        <a href="https://github.com/abhijnan/todo-app" target="_blank" class="github-link-btn">
+                            <i class="fab fa-github"></i> Code
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card reveal-item">
+                    <h3 class="project-title">Weather Dashboard</h3>
+                    <p class="project-desc">Fetches real-time weather data from an API and displays it beautifully. It's fully responsive and shows a 5-day forecast.</p>
+                    <div class="project-tech-stack">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">Fetch API</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://your-demo-link.com/weather" target="_blank" class="live-demo-btn">
+                            <i class="fas fa-external-link-alt"></i> Live Demo
+                        </a>
+                        <a href="https://github.com/abhijnan/weather-app" target="_blank" class="github-link-btn">
+                            <i class="fab fa-github"></i> Code
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card reveal-item">
+                    <h3 class="project-title">Portfolio V1 (This site's inspo!)</h3>
+                    <p class="project-desc">My very first portfolio website. It was built using only basic HTML and CSS. A good reminder of how far I've come!</p>
+                    <div class="project-tech-stack">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/abhijnan/portfolio-v1" target="_blank" class="github-link-btn">
+                            <i class="fab fa-github"></i> View Code
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title reveal-item">Let's Connect</h2>
+
+            <div class="contact-social-links reveal-item">
+                <p>Find me on social media or send a direct message:</p>
+                <div class="contact-icons">
+                    <a href="mailto:your.email@example.com" aria-label="Email Abhijnan"><i class="fas fa-envelope"></i></a>
+                    <a href="https://linkedin.com/in/abhijnan" target="_blank" aria-label="Abhijnan's LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/abhijnan" target="_blank" aria-label="Abhijnan's GitHub"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+
+            <form id="contact-form" class="reveal-item">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Abhijnan">
+                    <div class="error-message" id="name-error"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Your Email</label>
+                    <input type="email" id="email" name="email" required placeholder="you@example.com">
+                    <div class="error-message" id="email-error"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" required placeholder="Got a cool project idea?"></textarea>
+                    <div class="error-message" id="message-error"></div>
+                </div>
+
+                <button type="submit" class="submit-btn">Send Message</button>
+                <p id="form-status" class="form-status-msg"></p>
+            </form>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="social-links">
+            <a href="https://github.com/abhijnan" target="_blank" aria-label="Abhijnan's GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://instagram.com/abhijnan" target="_blank" aria-label="Abhijnan's Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+        <p>&copy; 2025 Abhijnan. Built with <i class="fas fa-heart"></i> and code.</p>
+    </footer>
+
+    <script src="portfolio1.js"></script>
+</body>
+</html>
