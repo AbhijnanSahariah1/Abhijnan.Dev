@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abhijnan | Student & Web Developer</title>
     <link rel="stylesheet" href="portfolio1.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+   
 </head>
 <body>
 
@@ -27,22 +26,29 @@
         </nav>
     </header>
 
-    <div class="mobile-menu" id="mobile-menu">
-        <button class="close-btn" aria-label="Close menu">&times;</button>
-        <a href="#hero" class="mobile-link">Home</a>
-        <a href="#about" class="mobile-link">About</a>
-        <a href="#projects" class="mobile-link">Projects</a>
-        <a href="#contact" class="mobile-link">Contact</a>
+    <div id="mobile-menu" class="mobile-menu-overlay">
+        <button class="close-btn"><i class="fas fa-times"></i></button>
+        <nav class="mobile-nav">
+            <ul>
+                <li><a href="#hero" class="mobile-link">Home</a></li>
+                <li><a href="#about" class="mobile-link">About</a></li>
+                <li><a href="#projects" class="mobile-link">Projects</a></li>
+                <li><a href="#contact" class="mobile-link">Contact</a></li>
+            </ul>
+            <button class="theme-toggle mobile-theme-toggle" aria-label="Toggle dark mode">
+                <i class="fas fa-sun"></i> Toggle Theme
+            </button>
+        </nav>
     </div>
-
+    
     <section id="hero" class="hero-section">
+        <div class="hero-animation-bg"></div>
         <div class="hero-content">
             <div class="hero-text fade-in-up">
                 <p class="greeting">Hey there, I'm</p>
                 <h1>Abhijnan.</h1>
                 <p class="subtitle">Student & Web Developer</p>
                 <a href="#projects" class="cta-button">See My Work <i class="fas fa-arrow-right"></i></a>
-                <a href="/path/to/your/resume.pdf" target="_blank" class="secondary-button">Download Resume</a>
             </div>
             <div class="profile-area slide-in-right">
                 <div class="profile-card">
@@ -55,105 +61,122 @@
         </a>
     </section>
 
-    <section id="about" class="about-section">
+    <section id="about" class="about-section section">
         <div class="container">
             <h2 class="section-title reveal-item">About Me</h2>
-
             <div class="about-content">
-                <p class="bio reveal-item">
-                    Hi! I'm **Abhijnan**, a 15-year-old high school student who loves building things on the web. I started coding because I was curious about how websites actually work, and now I can't stop creating! I enjoy making clean, easy-to-use websites and learning new technologies every day.
-                </p>
-
-                <div class="skills-box reveal-item">
-                    <h3>My Skills</h3>
+                <div class="bio reveal-item">
+                    <h3>Hello! I'm Abhijnan, a passionate student and aspiring developer.</h3>
+                    <p>I thrive on turning ideas into reality using code. My journey started with curiosity about how websites work, and I now focus on creating solutions that are not only functional but also intuitive and visually appealing. I'm actively learning new technologies to tackle real-world problems.</p>
+                </div>
+                <div class="skills reveal-item">
+                    <h3>My Toolkit</h3>
                     <div class="skills-grid">
-                        <span class="skill-tag">HTML5</span>
-                        <span class="skill-tag">CSS3</span>
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">Git</span>
-                        <span class="skill-tag">GitHub</span>
-                        <span class="skill-tag">VS Code</span>
+                        <span class="skill-tag"><i class="fab fa-html5"></i> HTML5</span>
+                        <span class="skill-tag"><i class="fab fa-css3-alt"></i> CSS3</span>
+                        <span class="skill-tag"><i class="fab fa-js-square"></i> JavaScript</span>
+                        <span class="skill-tag"><i class="fas fa-code"></i> Python</span>
+                        <span class="skill-tag"><i class="fab fa-github"></i> Git/GitHub</span>
+                        <span class="skill-tag"><i class="fas fa-terminal"></i> VS Code</span>
+                        <span class="skill-tag"><i class="fas fa-database"></i> LocalStorage</span>
+                        <span class="skill-tag"><i class="fas fa-cloud"></i> Fetch API</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="projects" class="projects-section">
+    <section id="projects" class="projects-section section">
         <div class="container">
             <h2 class="section-title reveal-item">Cool Stuff I've Built</h2>
 
             <div class="projects-grid">
+                
                 <div class="project-card reveal-item">
-                    <h3 class="project-title">Simple To-Do App</h3>
-                    <p class="project-desc">A classic To-Do list built with vanilla JavaScript. It uses local storage to save tasks, even after you close the browser. Super useful!</p>
-                    <div class="project-tech-stack">
-                        <span class="tech-tag">HTML</span>
-                        <span class="tech-tag">CSS</span>
-                        <span class="tech-tag">JavaScript</span>
-                        <span class="tech-tag">LocalStorage</span>
+                    <div class="project-image-wrapper">
+                        <img src="Driver monitoring system.png" alt="Screenshot of Driver Monitoring System concept" class="project-image">
                     </div>
-                    <div class="project-links">
-                        <a href="https://your-demo-link.com/todo" target="_blank" class="live-demo-btn">
-                            <i class="fas fa-external-link-alt"></i> Live Demo
-                        </a>
-                        <a href="https://github.com/abhijnan/todo-app" target="_blank" class="github-link-btn">
-                            <i class="fab fa-github"></i> Code
-                        </a>
+                    <div class="project-info">
+                        <h3 class="project-title">Driver Monitoring System</h3>
+                        <p class="project-desc">A smart safety companion that uses technology to detect driver drowsiness and send instant alerts in the event of an accident. A science project focused on road safety.</p>
+                        <div class="project-tech-stack">
+                            <span class="tech-tag">Python/AI</span>
+                            <span class="tech-tag">Hardware/Sensors</span>
+                            <span class="tech-tag">Alert System</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="Driver-monitoring-system.verce.app" target="_blank" class="live-demo-btn">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="https://github.com/AbhijnanSahariah1/DriverMonitoringSystem" target="_blank" class="github-link-btn" style="width: 100%; justify-content: center;">
+                                <i class="fab fa-github"></i> View Project Code
+                            </a>
+                        </div>
                     </div>
                 </div>
 
                 <div class="project-card reveal-item">
-                    <h3 class="project-title">Weather Dashboard</h3>
-                    <p class="project-desc">Fetches real-time weather data from an API and displays it beautifully. It's fully responsive and shows a 5-day forecast.</p>
-                    <div class="project-tech-stack">
-                        <span class="tech-tag">HTML</span>
-                        <span class="tech-tag">CSS</span>
-                        <span class="tech-tag">Fetch API</span>
+                    <div class="project-image-wrapper">
+                        <img src="gamehub.png" alt="Screenshot of GameHub Pro" class="project-image">
                     </div>
-                    <div class="project-links">
-                        <a href="https://your-demo-link.com/weather" target="_blank" class="live-demo-btn">
-                            <i class="fas fa-external-link-alt"></i> Live Demo
-                        </a>
-                        <a href="https://github.com/abhijnan/weather-app" target="_blank" class="github-link-btn">
-                            <i class="fab fa-github"></i> Code
-                        </a>
+                    <div class="project-info">
+                        <h3 class="project-title">GameHub Pro (Multi-Game)</h3>
+                        <p class="project-desc">A dynamic web platform featuring multiple classic games like Snake, Tic-Tac-Toe, and Memory. Experience classic games reimagined with modern design.</p>
+                        <div class="project-tech-stack">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Game Logic</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://abhijnansahariah1.github.io/Multi-Game/" target="_blank" class="live-demo-btn">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="https://github.com/AbhijnanSahariah1/Multi-Game" target="_blank" class="github-link-btn">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                        </div>
                     </div>
                 </div>
 
                 <div class="project-card reveal-item">
-                    <h3 class="project-title">Portfolio V1 (This site's inspo!)</h3>
-                    <p class="project-desc">My very first portfolio website. It was built using only basic HTML and CSS. A good reminder of how far I've come!</p>
-                    <div class="project-tech-stack">
-                        <span class="tech-tag">HTML</span>
-                        <span class="tech-tag">CSS</span>
+                    <div class="project-image-wrapper">
+                        <img src="portfolio-v1-screenshot.jpg" alt="Screenshot of Portfolio V1" class="project-image">
                     </div>
-                    <div class="project-links">
-                        <a href="https://github.com/abhijnan/portfolio-v1" target="_blank" class="github-link-btn">
-                            <i class="fab fa-github"></i> View Code
-                        </a>
+                    <div class="project-info">
+                        <h3 class="project-title">Portfolio V1</h3>
+                        <p class="project-desc">My foundational portfolio built using basic HTML and CSS. This project demonstrates my progress and early grasp of web fundamentals.</p>
+                        <div class="project-tech-stack">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">Basic Design</span>
+                        </div>
+                        <div class="project-links">
+                             <a href="https://github.com/AbhijnanSahariah1/portfolio-v1" target="_blank" class="github-link-btn" style="width: 100%; justify-content: center;">
+                                <i class="fab fa-github"></i> View Code
+                            </a>
+                        </div>
                     </div>
                 </div>
-
+                
             </div>
         </div>
     </section>
 
-    <section id="contact" class="contact-section">
+    <section id="contact" class="contact-section section">
         <div class="container">
             <h2 class="section-title reveal-item">Let's Connect</h2>
-
+            <p class="contact-subtitle reveal-item">Find me on social media or send a direct message:</p>
+            
             <div class="contact-social-links reveal-item">
-                <p>Find me on social media or send a direct message:</p>
                 <div class="contact-icons">
-                    <a href="AbhijnanSahariah18gmail.com" aria-label="Email Abhijnan"><i class="fas fa-envelope"></i></a>
-                    <a href="https://linkedin.com/in/abhijnan" target="_blank" aria-label="Abhijnan's LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://github.com/abhijnanSahariah1" target="_blank" aria-label="Abhijnan's GitHub"><i class="fab fa-github"></i></a>
+                    <a href="AbhijnanSahariah18@gmail.com" aria-label="Email Abhijnan" class="social-icon-btn"><i class="fas fa-envelope"></i></a>
+                    <a href="https://linkedin.com/in/abhijnan" target="_blank" aria-label="Abhijnan's LinkedIn" class="social-icon-btn"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/AbhijnanSahariah1" target="_blank" aria-label="Abhijnan's GitHub" class="social-icon-btn"><i class="fab fa-github"></i></a>
                 </div>
             </div>
 
-            <form id="contact-form" class="reveal-item">
+            <form id="contact-form" class="contact-form reveal-item">
                 <div class="form-group">
                     <label for="name">Your Name</label>
                     <input type="text" id="name" name="name" required placeholder="Abhijnan">
@@ -180,7 +203,7 @@
 
     <footer class="main-footer">
         <div class="social-links">
-            <a href="https://github.com/abhijnanSahariah1" target="_blank" aria-label="Abhijnan's GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://github.com/AbhijnanSahariah1" target="_blank" aria-label="Abhijnan's GitHub"><i class="fab fa-github"></i></a>
             <a href="https://instagram.com/abhijnan_s.18" target="_blank" aria-label="Abhijnan's Instagram"><i class="fab fa-instagram"></i></a>
         </div>
         <p>&copy; 2025 Abhijnan. Built with <i class="fas fa-heart"></i> and code.</p>
