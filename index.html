@@ -3,86 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abhijnan | Student & Web Developer</title>
+    <title>Abhijnan | Innovative Developer</title>
+    
     <link rel="stylesheet" href="portfolio1.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-   
 </head>
-<body>
+<body class="dark-theme">
 
     <header class="main-header">
-        <div class="logo">Abhijnan.dev</div>
+        <div class="logo">A_S</div>
         <nav class="main-nav">
             <ul class="nav-links">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#projects">Work</a></li>
+                <li><a href="#expertise">Expertise</a></li>
+                <li><a href="#contact">Connect</a></li>
             </ul>
-            <button class="theme-toggle" aria-label="Toggle dark mode">
-                <i class="fas fa-sun"></i> </button>
-            <button class="menu-toggle" aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
         </nav>
+        <button id="menu-toggle" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
     </header>
 
-    <div id="mobile-menu" class="mobile-menu-overlay">
+    <div id="mobile-menu-overlay" class="mobile-menu-overlay">
         <button class="close-btn"><i class="fas fa-times"></i></button>
         <nav class="mobile-nav">
             <ul>
-                <li><a href="#hero" class="mobile-link">Home</a></li>
-                <li><a href="#about" class="mobile-link">About</a></li>
-                <li><a href="#projects" class="mobile-link">Projects</a></li>
-                <li><a href="#contact" class="mobile-link">Contact</a></li>
+                <li><a href="#projects">Work</a></li>
+                <li><a href="#expertise">Expertise</a></li>
+                <li><a href="#contact">Connect</a></li>
             </ul>
-            <button class="theme-toggle mobile-theme-toggle" aria-label="Toggle dark mode">
-                <i class="fas fa-sun"></i> Toggle Theme
-            </button>
         </nav>
     </div>
     
     <section id="hero" class="hero-section">
-        <div class="hero-animation-bg"></div>
-        <div class="hero-content">
-            <div class="hero-text fade-in-up">
-                <p class="greeting">Hey there, I'm</p>
-                <h1>Abhijnan.</h1>
-                <p class="subtitle">Student & Web Developer</p>
-                <a href="#projects" class="cta-button">See My Work <i class="fas fa-arrow-right"></i></a>
+        <div class="container">
+            <div class="hero-intro">
+                <p class="greeting">// Abhijnan, Student Developer</p>
+                <h1 class="fade-in">Crafting **Smart, Connected Experiences**</h1>
+                <p class="tagline fade-in">AI/ML | IoT | Web Technologies</p>
+                <div class="cta-area fade-in">
+                    <a href="#projects" class="primary-cta">View Recent Work <i class="fas fa-long-arrow-alt-right"></i></a>
+                    <a href="#contact" class="secondary-cta">Say Hello</a>
+                </div>
             </div>
-            <div class="profile-area slide-in-right">
-                <div class="profile-card">
-                    <img src="Abhijnan1.jpg" alt="Abhijnan's Profile Picture" class="profile-pic"> 
+            
+            <div class="hero-detail-grid">
+                <div class="detail-block code-snippet">
+                    <p class="label">Latest Commit:</p>
+                    <pre><code>$ git commit -m "feat: New portfolio structure"</code></pre>
+                </div>
+                
+                <div class="detail-block skills-list">
+                    <p class="label">Core Stack:</p>
+                    <ul class="tag-list">
+                        <li>Python</li>
+                        <li>TypeScript</li>
+                        <li>React</li>
+                        <li>Node.js</li>
+                        <li>Html</li>
+                        <li>CSS</li>
+                    </ul>
+                </div>
+
+                <div class="detail-block description">
+                    <p>I'm driven by innovation and the goal of solving real-world problems. My passion lies at the intersection of embedded systems (IoT), intelligent algorithms (AI/ML), and responsive front-end design.</p>
                 </div>
             </div>
         </div>
-        <a href="#about" class="scroll-down-arrow" aria-label="Scroll down to About Me">
-            <i class="fas fa-chevron-down"></i>
-        </a>
     </section>
 
-    <section id="about" class="about-section section">
+    <section id="expertise" class="expertise-section section">
         <div class="container">
-            <h2 class="section-title reveal-item">About Me</h2>
-            <div class="about-content">
-                <div class="bio reveal-item">
-                    <h3>Hello! I'm Abhijnan, a passionate student and aspiring developer.</h3>
-                    <p>I thrive on turning ideas into reality using code. My journey started with curiosity about how websites work, and I now focus on creating solutions that are not only functional but also intuitive and visually appealing. I'm actively learning new technologies to tackle real-world problems.</p>
+            <h2 class="section-title">// Expertise.</h2>
+            <div class="expertise-grid">
+                <div class="expertise-item">
+                    <h3>01. AI/ML & Data</h3>
+                    <p>Developing lightweight models and utilizing APIs for real-time data processing, particularly for sensor data and predictive analysis in IoT contexts.</p>
                 </div>
-                <div class="skills reveal-item">
-                    <h3>My Toolkit</h3>
-                    <div class="skills-grid">
-                        <span class="skill-tag"><i class="fab fa-html5"></i> HTML5</span>
-                        <span class="skill-tag"><i class="fab fa-css3-alt"></i> CSS3</span>
-                        <span class="skill-tag"><i class="fab fa-js-square"></i> JavaScript</span>
-                        <span class="skill-tag"><i class="fas fa-code"></i> Python</span>
-                        <span class="skill-tag"><i class="fab fa-github"></i> Git/GitHub</span>
-                        <span class="skill-tag"><i class="fas fa-terminal"></i> VS Code</span>
-                        <span class="skill-tag"><i class="fas fa-database"></i> LocalStorage</span>
-                        <span class="skill-tag"><i class="fas fa-cloud"></i> Fetch API</span>
-                    </div>
+                <div class="expertise-item">
+                    <h3>02. IoT & Embedded</h3>
+                    <p>Experience with sensor integration, microcontrollers (e.g., Arduino/ESP32), and building dashboards for remote device management and data visualization.</p>
+                </div>
+                <div class="expertise-item">
+                    <h3>03. Web Development</h3>
+                    <p>Building scalable, modern interfaces using the T3 stack (Next.js, TypeScript, Tailwind) ensuring performance and a great user experience.</p>
                 </div>
             </div>
         </div>
@@ -90,126 +96,63 @@
 
     <section id="projects" class="projects-section section">
         <div class="container">
-            <h2 class="section-title reveal-item">Cool Stuff I've Built</h2>
-
-            <div class="projects-grid">
+            <h2 class="section-title">// Selected Work.</h2>
+            <div class="projects-list">
                 
-                <div class="project-card reveal-item">
-                    <div class="project-image-wrapper">
-                        <img src="Driver monitoring system.png" alt="Screenshot of Driver Monitoring System concept" class="project-image">
-                    </div>
-                    <div class="project-info">
-                        <h3 class="project-title">Driver Monitoring System</h3>
-                        <p class="project-desc">A smart safety companion that uses technology to detect driver drowsiness and send instant alerts in the event of an accident. A science project focused on road safety.</p>
-                        <div class="project-tech-stack">
-                            <span class="tech-tag">Python/AI</span>
-                            <span class="tech-tag">Hardware/Sensors</span>
-                            <span class="tech-tag">Alert System</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://abhijnansahariah1.github.io/DriverMonitoringSystem/" target="_blank" class="live-demo-btn">
-                                <i class="fas fa-external-link-alt"></i> Live Demo
-                            </a>
-                            <a href="https://github.com/AbhijnanSahariah1/DriverMonitoringSystem" target="_blank" class="github-link-btn" style="width: 100%; justify-content: center;">
-                                <i class="fab fa-github"></i> View Project Code
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                <a href="https://abhijnansahariah1.github.io/DriverMonitoringSystem/" target="_blank" class="project-item">
+                    <span class="project-year">2024</span>
+                    <span class="project-title-name">Driver Monitoring System</span>
+                    <span class="project-tags">#Python #AI #Hardware</span>
+                    <i class="fas fa-external-link-alt project-link-icon"></i>
+                </a>
 
-                <div class="project-card reveal-item">
-                    <div class="project-image-wrapper">
-                        <img src="gamehub.png" alt="Screenshot of GameHub Pro" class="project-image">
-                    </div>
-                    <div class="project-info">
-                        <h3 class="project-title">GameHub Pro (Multi-Game)</h3>
-                        <p class="project-desc">A dynamic web platform featuring multiple classic games like Snake, Tic-Tac-Toe, and Memory. Experience classic games reimagined with modern design.</p>
-                        <div class="project-tech-stack">
-                            <span class="tech-tag">HTML</span>
-                            <span class="tech-tag">CSS</span>
-                            <span class="tech-tag">JavaScript</span>
-                            <span class="tech-tag">Game Logic</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://abhijnansahariah1.github.io/Multi-Game/" target="_blank" class="live-demo-btn">
-                                <i class="fas fa-external-link-alt"></i> Live Demo
-                            </a>
-                            <a href="https://github.com/AbhijnanSahariah1/Multi-Game" target="_blank" class="github-link-btn">
-                                <i class="fab fa-github"></i> Code
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                <a href="https://abhijnansahariah1.github.io/Multi-Game/" target="_blank" class="project-item">
+                    <span class="project-year">2023</span>
+                    <span class="project-title-name">GameHub Pro (Multi-Game Platform)</span>
+                    <span class="project-tags">#JavaScript #HTML #GameLogic</span>
+                    <i class="fas fa-external-link-alt project-link-icon"></i>
+                </a>
 
-                <div class="project-card reveal-item">
-                    <div class="project-image-wrapper">
-                        <img src="portfolio-v1-screenshot.jpg" alt="Screenshot of Portfolio V1" class="project-image">
-                    </div>
-                    <div class="project-info">
-                        <h3 class="project-title">Portfolio V1</h3>
-                        <p class="project-desc">My foundational portfolio built using basic HTML and CSS. This project demonstrates my progress and early grasp of web fundamentals.</p>
-                        <div class="project-tech-stack">
-                            <span class="tech-tag">HTML</span>
-                            <span class="tech-tag">CSS</span>
-                            <span class="tech-tag">Basic Design</span>
-                        </div>
-                        <div class="project-links">
-                             <a href="https://github.com/AbhijnanSahariah1/portfolio-v1" target="_blank" class="github-link-btn" style="width: 100%; justify-content: center;">
-                                <i class="fab fa-github"></i> View Code
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
+                 <a href="https://github.com/AbhijnanSahariah1/portfolio-v1" target="_blank" class="project-item">
+                    <span class="project-year">2023</span>
+                    <span class="project-title-name">Portfolio V1 (Foundation)</span>
+                    <span class="project-tags">#HTML #CSS #Design</span>
+                    <i class="fas fa-external-link-alt project-link-icon"></i>
+                </a>
             </div>
         </div>
     </section>
 
     <section id="contact" class="contact-section section">
         <div class="container">
-            <h2 class="section-title reveal-item">Let's Connect</h2>
-            <p class="contact-subtitle reveal-item">Find me on social media or send a direct message:</p>
-            
-            <div class="contact-social-links reveal-item">
-                <div class="contact-icons">
-                    <a href="AbhijnanSahariah18@gmail.com" aria-label="Email Abhijnan" class="social-icon-btn"><i class="fas fa-envelope"></i></a>
-                    <a href="https://linkedin.com/in/abhijnan" target="_blank" aria-label="Abhijnan's LinkedIn" class="social-icon-btn"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://github.com/AbhijnanSahariah1" target="_blank" aria-label="Abhijnan's GitHub" class="social-icon-btn"><i class="fab fa-github"></i></a>
-                </div>
+            <h2 class="section-title">// Get In Touch.</h2>
+            <p class="contact-text">
+                I'm currently seeking collaborative opportunities in innovative technology projects. Feel free to reach out via email or connect with me on professional platforms.
+            </p>
+            <div class="contact-links-grid">
+                <a href="mailto:AbhijnanSahariah18@gmail.com" class="contact-link-card">
+                    <i class="fas fa-envelope"></i>
+                    <p>Email Me</p>
+                    <span>AbhijnanSahariah18@gmail.com</span>
+                </a>
+                <a href="https://linkedin.com/in/abhijnan" target="_blank" class="contact-link-card">
+                    <i class="fab fa-linkedin-in"></i>
+                    <p>LinkedIn</p>
+                    <span>/in/abhijnan</span>
+                </a>
+                <a href="https://github.com/AbhijnanSahariah1" target="_blank" class="contact-link-card">
+                    <i class="fab fa-github"></i>
+                    <p>GitHub</p>
+                    <span>@AbhijnanSahariah1</span>
+                </a>
             </div>
-
-         <form id="contact-form" class="contact-form reveal-item" action="https://formsubmit.co/AbhijnanSahariah18@gmail.com" method="POST">
-
-    <input type="hidden" name="_subject" value="New Portfolio Message from Abhijnan!">
-    
-    <input type="hidden" name="_next" value="https://YOUR-SITE-URL/#contact">
-
-    <div class="form-group">
-        <label for="name">Your Name</label>
-        <input type="text" id="name" name="name" required placeholder="Abhijnan">
-        </div>
-
-    <div class="form-group">
-        <label for="email">Your Email</label>
-        <input type="email" id="email" name="email" required placeholder="you@example.com">
-        </div>
-
-    <div class="form-group">
-        <label for="message">Message</label>
-        <textarea id="message" name="message" rows="5" required placeholder="Got a cool project idea?"></textarea>
-        </div>
-
-    <button type="submit" class="submit-btn">Send Message</button>
-    </form>
         </div>
     </section>
 
     <footer class="main-footer">
-        <div class="social-links">
-            <a href="https://github.com/AbhijnanSahariah1" target="_blank" aria-label="Abhijnan's GitHub"><i class="fab fa-github"></i></a>
-            <a href="https://instagram.com/abhijnan_s.18" target="_blank" aria-label="Abhijnan's Instagram"><i class="fab fa-instagram"></i></a>
+        <div class="container">
+            <p>&copy; 2025 Abhijnan Sahariah </i> All right reserved.</p>
         </div>
-        <p>&copy; 2025 Abhijnan. Built with <i class="fas fa-heart"></i> and code.</p>
     </footer>
 
     <script src="portfolio1.js"></script>
