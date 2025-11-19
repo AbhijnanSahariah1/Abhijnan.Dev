@@ -1,202 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Abhijnan | Developer</title>
-
-    <meta name="description" content="Portfolio of Abhijnan — student developer exploring AI, IoT and web dev.">
     <meta name="robots" content="index, follow">
+    <meta name="description" content="Abhijnan | Student and Web Developer. Projects in HTML, CSS, JS, Python and AI.">
 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhijnan | Innovative Developer</title>
+    
     <link rel="stylesheet" href="portfolio1.css">
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+<body class="dark-theme">
 
-<body class="theme-dark">
+    <header class="main-header">
+        <div class="logo">A_S</div>
+        <nav class="main-nav">
+            <ul class="nav-links">
+                <li><a href="#projects">Work</a></li>
+                <li><a href="#expertise">Expertise</a></li>
+                <li><a href="#contact">Connect</a></li>
+            </ul>
+        </nav>
+        <button id="menu-toggle" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
 
-<header class="hdr">
-    <div class="brand">A_S</div>
+    <div id="mobile-menu-overlay" class="mobile-menu-overlay">
+        <button class="close-btn"><i class="fas fa-times"></i></button>
+        <nav class="mobile-nav">
+            <ul>
+                <li><a href="#projects">Work</a></li>
+                <li><a href="#expertise">Expertise</a></li>
+                <li><a href="#contact">Connect</a></li>
+            </ul>
+        </nav>
+    </div>
+    
+    <section id="hero" class="hero-section">
+        <div class="container">
+            <div class="hero-intro">
+                <p class="greeting">// Abhijnan, Student Developer</p>
+                <h1 class="fade-in">Crafting **Smart, Connected Experiences**</h1>
+                <p class="tagline fade-in">AI/ML | IoT | Web Technologies</p>
+                <div class="cta-area fade-in">
+                    <a href="#projects" class="primary-cta">View Recent Work <i class="fas fa-long-arrow-alt-right"></i></a>
+                    <a href="#contact" class="secondary-cta">Say Hello</a>
+                </div>
+            </div>
+            
+            <div class="hero-detail-grid">
+                <div class="detail-block code-snippet">
+                    <p class="label">Latest Commit:</p>
+                    <pre><code>$ git commit -m "feat: New portfolio structure"</code></pre>
+                </div>
+                
+                <div class="detail-block skills-list">
+                    <p class="label">Core Stack:</p>
+                    <ul class="tag-list">
+                        <li>Python</li>
+                        <li>TypeScript</li>
+                        <li>React</li>
+                        <li>Node.js</li>
+                        <li>Html</li>
+                        <li>CSS</li>
+                    </ul>
+                </div>
 
-    <nav class="nav-main">
-        <ul>
-            <li><a href="#projects">Work</a></li>
-            <li><a href="#expertise">Expertise</a></li>
-            <li><a href="#contact">Connect</a></li>
-        </ul>
-    </nav>
-
-    <button id="menu-toggle" class="menu-btn">
-        <i class="fas fa-bars"></i>
-    </button>
-</header>
-
-
-<div id="mobile-menu" class="menu-overlay">
-    <button class="menu-close"><i class="fas fa-times"></i></button>
-
-    <nav class="menu-links">
-        <ul>
-            <li><a href="#projects">Work</a></li>
-            <li><a href="#expertise">Expertise</a></li>
-            <li><a href="#contact">Connect</a></li>
-        </ul>
-    </nav>
-</div>
-
-
-<section id="hero" class="hero-wrap">
-    <div class="inner">
-
-        <div class="hero-left">
-            <p class="tag">// Abhijnan — Student & Developer</p>
-
-            <h1 class="fade-in">Building simple, efficient digital experiences</h1>
-
-            <p class="sub fade-in">AI & IoT & Web Development</p>
-
-            <div class="cta-block fade-in">
-                <a href="#projects" class="cta-main">Projects <i class="fas fa-long-arrow-alt-right"></i></a>
-                <a href="#contact" class="cta-sec">Contact</a>
+                <div class="detail-block description">
+                    <p>I'm driven by innovation and the goal of solving real-world problems. My passion lies at the intersection of embedded systems (IoT), intelligent algorithms (AI/ML), and responsive front-end design.</p>
+                </div>
             </div>
         </div>
+    </section>
 
-        <div class="hero-right">
-
-            <div class="box commit-box">
-                <p class="lbl">Latest Commit:</p>
-                <pre><code>$ git commit -m "portfolio update"</code></pre>
+    <section id="expertise" class="expertise-section section">
+        <div class="container">
+            <h2 class="section-title">// Expertise.</h2>
+            <div class="expertise-grid">
+                <div class="expertise-item">
+                    <h3>01. AI/ML & Data</h3>
+                    <p>Developing lightweight models and utilizing APIs for real-time data processing, particularly for sensor data and predictive analysis in IoT contexts.</p>
+                </div>
+                <div class="expertise-item">
+                    <h3>02. IoT & Embedded</h3>
+                    <p>Experience with sensor integration, microcontrollers (e.g., Arduino/ESP32), and building dashboards for remote device management and data visualization.</p>
+                </div>
+                <div class="expertise-item">
+                    <h3>03. Web Development</h3>
+                    <p>Building scalable, modern interfaces using the T3 stack (Next.js, TypeScript, Tailwind) ensuring performance and a great user experience.</p>
+                </div>
             </div>
-
-            <div class="box stack-box">
-                <p class="lbl">Core Tech:</p>
-                <ul class="stack-tags">
-                    <li>Python</li>
-                    <li>TypeScript</li>
-                    <li>React</li>
-                    <li>Node.js</li>
-                    <li>HTML</li>
-                    <li>CSS</li>
-                </ul>
-            </div>
-
-            <div class="box about-box">
-                <p>
-                    I enjoy working on small but thoughtful builds — embedded setups,
-                    AI utilities and simple interfaces.
-                </p>
-            </div>
-
         </div>
-    </div>
-</section>
+    </section>
 
+    <section id="projects" class="projects-section section">
+        <div class="container">
+            <h2 class="section-title">// Selected Work.</h2>
+            <div class="projects-list">
+                
+                <a href="https://abhijnansahariah1.github.io/DriverMonitoringSystem/" target="_blank" class="project-item">
+                    <span class="project-year">2024</span>
+                    <span class="project-title-name">Driver Monitoring System</span>
+                    <span class="project-tags">#Python #AI #Hardware</span>
+                    <i class="fas fa-external-link-alt project-link-icon"></i>
+                </a>
 
-<section id="expertise" class="sec">
-    <div class="inner">
+                <a href="https://abhijnansahariah1.github.io/Multi-Game/" target="_blank" class="project-item">
+                    <span class="project-year">2023</span>
+                    <span class="project-title-name">GameHub Pro (Multi-Game Platform)</span>
+                    <span class="project-tags">#JavaScript #HTML #GameLogic</span>
+                    <i class="fas fa-external-link-alt project-link-icon"></i>
+                </a>
 
-        <h2 class="sec-title">// Expertise</h2>
-
-        <div class="grid-exp">
-
-            <div class="exp-card">
-                <h3>01. AI & Data</h3>
-                <p>Working with small models, sensors and API-based prediction tasks.</p>
+                 <a href="https://github.com/AbhijnanSahariah1/portfolio-v1" target="_blank" class="project-item">
+                    <span class="project-year">2023</span>
+                    <span class="project-title-name">Portfolio V1 (Foundation)</span>
+                    <span class="project-tags">#HTML #CSS #Design</span>
+                    <i class="fas fa-external-link-alt project-link-icon"></i>
+                </a>
             </div>
+        </div>
+    </section>
 
-            <div class="exp-card">
-                <h3>02. IoT & Hardware</h3>
-                <p>Arduino, ESP32, relays, sensors and hardware experiments.</p>
+    <section id="contact" class="contact-section section">
+        <div class="container">
+            <h2 class="section-title">// Get In Touch.</h2>
+            <p class="contact-text">
+                I'm currently seeking collaborative opportunities in innovative technology projects. Feel free to reach out via email or connect with me on professional platforms.
+            </p>
+            <div class="contact-links-grid">
+                <a href="mailto:AbhijnanSahariah18@gmail.com" class="contact-link-card">
+                    <i class="fas fa-envelope"></i>
+                    <p>Email Me</p>
+                    <span>AbhijnanSahariah18@gmail.com</span>
+                </a>
+                <a href="https://linkedin.com/in/abhijnan" target="_blank" class="contact-link-card">
+                    <i class="fab fa-linkedin-in"></i>
+                    <p>LinkedIn</p>
+                    <span>/in/abhijnan</span>
+                </a>
+                <a href="https://github.com/AbhijnanSahariah1" target="_blank" class="contact-link-card">
+                    <i class="fab fa-github"></i>
+                    <p>GitHub</p>
+                    <span>@AbhijnanSahariah1</span>
+                </a>
             </div>
-
-            <div class="exp-card">
-                <h3>03. Web Dev</h3>
-                <p>Building clean UIs with HTML, CSS, JS and TypeScript tools.</p>
-            </div>
-
         </div>
+    </section>
 
-    </div>
-</section>
-
-
-<section id="projects" class="sec">
-    <div class="inner">
-
-        <h2 class="sec-title">// Projects</h2>
-
-        <div class="proj-list">
-
-            <a href="https://abhijnansahariah1.github.io/DriverMonitoringSystem/" target="_blank" class="proj-item">
-                <span class="yr">2024</span>
-                <span class="nm">Driver Monitoring System</span>
-                <span class="tg">#Python #AI #Hardware</span>
-                <i class="fas fa-external-link-alt ico"></i>
-            </a>
-
-            <a href="https://abhijnansahariah1.github.io/Multi-Game/" target="_blank" class="proj-item">
-                <span class="yr">2023</span>
-                <span class="nm">GameHub Pro</span>
-                <span class="tg">#HTML #JS #Games</span>
-                <i class="fas fa-external-link-alt ico"></i>
-            </a>
-
-            <a href="https://github.com/AbhijnanSahariah1/portfolio-v1" target="_blank" class="proj-item">
-                <span class="yr">2023</span>
-                <span class="nm">Portfolio v1</span>
-                <span class="tg">#HTML #CSS</span>
-                <i class="fas fa-external-link-alt ico"></i>
-            </a>
-
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 Abhijnan Sahariah </i> All right reserved.</p>
         </div>
+    </footer>
 
-    </div>
-</section>
-
-
-<section id="contact" class="sec">
-    <div class="inner">
-
-        <h2 class="sec-title">// Contact</h2>
-
-        <p class="contact-note">
-            Open for collaborations and tech work. Reach out anytime.
-        </p>
-
-        <div class="contact-grid">
-
-            <a href="mailto:AbhijnanSahariah18@gmail.com" class="contact-card">
-                <i class="fas fa-envelope"></i>
-                <p>Email</p>
-                <span>AbhijnanSahariah18@gmail.com</span>
-            </a>
-
-            <a href="https://linkedin.com/in/abhijnan" target="_blank" class="contact-card">
-                <i class="fab fa-linkedin-in"></i>
-                <p>LinkedIn</p>
-                <span>/in/abhijnan</span>
-            </a>
-
-            <a href="https://github.com/AbhijnanSahariah1" target="_blank" class="contact-card">
-                <i class="fab fa-github"></i>
-                <p>GitHub</p>
-                <span>@AbhijnanSahariah1</span>
-            </a>
-
-        </div>
-
-    </div>
-</section>
-
-
-<footer class="footer">
-    <div class="inner">
-        <p>© 2025 Abhijnan Sahariah</p>
-    </div>
-</footer>
-
-<script src="portfolio1.js"></script>
+    <script src="portfolio1.js"></script>
 </body>
 </html>
