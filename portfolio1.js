@@ -1,58 +1,64 @@
 // portfolio1.js
-// Handles mobile menu, fade-ins, and small hero animations
+// basic menu + section reveal + small hero fade stuff
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Grab what we need once
-    const menuBtn = document.getElementById('menu-toggle');
-    const overlay = document.getElementById('mobile-menu-overlay');
-    const closeBtn = overlay?.querySelector('.close-btn');
-    const navLinks = overlay?.querySelectorAll('a');
-    const sections = document.querySelectorAll('.section');
+document.addEventListener("DOMContentLoaded", () => {
+    const menuBtn = document.querySelector("#menu-toggle");
+    const overlay = document.querySelector("#mobile-menu-overlay");
+    const closeBtn = overlay ? overlay.querySelector(".close-btn") : null;
+    const links = overlay ? overlay.querySelectorAll("a") : [];
+    const allSections = document.querySelectorAll(".section");
 
-    // Mobile menu handlers
-    const openMenu = () => {
+    // just show the menu
+    const showMenu = () => {
         if (!overlay) return;
-        overlay.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
+        overlay.style.display = "flex";
+        document.body.style.overflow = "hidden";
     };
 
-    const closeMenu = () => {
+    // hide menu
+    const hideMenu = () => {
         if (!overlay) return;
-        overlay.style.display = 'none';
-        document.body.style.overflow = '';
+        overlay.style.display = "none";
+        document.body.style.overflow = "";
     };
 
-    // Toggle events
-    menuBtn?.addEventListener('click', openMenu);
-    closeBtn?.addEventListener('click', closeMenu);
+    // events
+    if (menuBtn) {
+        menuBtn.addEventListener("click", showMenu);
+    }
+    if (closeBtn) {
+        closeBtn.addEventListener("click", hideMenu);
+    }
 
-    navLinks?.forEach(link => {
-        link.addEventListener('click', closeMenu);
+    links.forEach(l => {
+        l.addEventListener("click", hideMenu);
     });
 
-    // Simple intersection reveal
-    const reveal = new IntersectionObserver((entries, obs) => {
-        entries.forEach(item => {
-            if (item.isIntersecting) {
-                item.target.classList.add('visible');
-                obs.unobserve(item.target);
+    // reveal on scroll
+    const watcher = new IntersectionObserver((items, obs) => {
+        items.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                obs.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.1 });
+    }, {
+        threshold: 0.12
+    });
 
-    sections.forEach(sec => reveal.observe(sec));
+    allSections.forEach(sec => watcher.observe(sec));
 
-    // Soft fade-in for hero elements
-    const fadeItems = document.querySelectorAll('.fade-in');
+    // small fade-in on hero bits
+    const fadeStuff = document.querySelectorAll(".fade-in");
 
-    fadeItems.forEach((el, i) => {
+    fadeStuff.forEach((el, index) => {
         el.style.opacity = 0;
-        el.style.transform = 'translateY(10px)';
+        el.style.transform = "translateY(12px)";
 
         setTimeout(() => {
-            el.style.transition = 'opacity .8s ease-out, transform .8s ease-out';
+            el.style.transition = "opacity .7s ease-out, transform .7s ease-out";
             el.style.opacity = 1;
-            el.style.transform = 'translateY(0)';
-        }, 500 + i * 200);
+            el.style.transform = "translateY(0)";
+        }, 400 + index * 180);
     });
 });
