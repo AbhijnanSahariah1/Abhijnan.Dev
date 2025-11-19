@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://abhijnan-dev.vercel.app/sitemap.xml
