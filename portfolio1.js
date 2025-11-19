@@ -1,64 +1,59 @@
-// portfolio1.js
-// basic menu + section reveal + small hero fade stuff
+document.addEventListener('DOMContentLoaded', () => {
+    // --- 1. Mobile Menu Toggle Logic ---
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+    const closeBtn = mobileMenuOverlay.querySelector('.close-btn');
+    const mobileNavLinks = mobileMenuOverlay.querySelectorAll('a');
 
-document.addEventListener("DOMContentLoaded", () => {
-    const menuBtn = document.querySelector("#menu-toggle");
-    const overlay = document.querySelector("#mobile-menu-overlay");
-    const closeBtn = overlay ? overlay.querySelector(".close-btn") : null;
-    const links = overlay ? overlay.querySelectorAll("a") : [];
-    const allSections = document.querySelectorAll(".section");
-
-    // just show the menu
-    const showMenu = () => {
-        if (!overlay) return;
-        overlay.style.display = "flex";
-        document.body.style.overflow = "hidden";
-    };
-
-    // hide menu
-    const hideMenu = () => {
-        if (!overlay) return;
-        overlay.style.display = "none";
-        document.body.style.overflow = "";
-    };
-
-    // events
-    if (menuBtn) {
-        menuBtn.addEventListener("click", showMenu);
-    }
-    if (closeBtn) {
-        closeBtn.addEventListener("click", hideMenu);
+    /**
+     * Toggles the visibility of the mobile menu overlay.
+     */
+    function toggleMenu() {
+        // Toggle display style between 'none' and 'flex'
+        const isHidden = mobileMenuOverlay.style.display === 'none' || mobileMenuOverlay.style.display === '';
+        mobileMenuOverlay.style.display = isHidden ? 'flex' : 'none';
+        
+        // Prevent body scrolling when the menu is open
+        document.body.style.overflow = isHidden ? 'hidden' : 'auto';
     }
 
-    links.forEach(l => {
-        l.addEventListener("click", hideMenu);
+    menuToggle.addEventListener('click', toggleMenu);
+    closeBtn.addEventListener('click', toggleMenu);
+
+    // Close menu when a link is clicked (mobile navigation)
+    mobileNavLinks.forEach(link => {
+        link.addEventListener('click', toggleMenu);
     });
 
-    // reveal on scroll
-    const watcher = new IntersectionObserver((items, obs) => {
-        items.forEach(entry => {
+    // --- 2. Section Visibility on Scroll (Fade-in effect) ---
+    // This provides the smooth, staggered loading of the expertise and project sections.
+    const sections = document.querySelectorAll('.section');
+
+    // Set up Intersection Observer options
+    const observerOptions = {
+        root: null, // relative to the viewport
+        rootMargin: '0px',
+        // Trigger when 20% of the section is visible
+        threshold: 0.2 
+    };
+
+    /**
+     * Callback function for the Intersection Observer.
+     * Adds the 'visible' class to sections as they enter the viewport.
+     */
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add("visible");
-                obs.unobserve(entry.target);
+                // Add the 'visible' class to start the CSS transition
+                entry.target.classList.add('visible');
+                // Stop observing once visible to optimize performance
+                observer.unobserve(entry.target); 
             }
         });
-    }, {
-        threshold: 0.12
-    });
+    }, observerOptions);
 
-    allSections.forEach(sec => watcher.observe(sec));
-
-    // small fade-in on hero bits
-    const fadeStuff = document.querySelectorAll(".fade-in");
-
-    fadeStuff.forEach((el, index) => {
-        el.style.opacity = 0;
-        el.style.transform = "translateY(12px)";
-
-        setTimeout(() => {
-            el.style.transition = "opacity .7s ease-out, transform .7s ease-out";
-            el.style.opacity = 1;
-            el.style.transform = "translateY(0)";
-        }, 400 + index * 180);
+    // Start observing all sections
+    sections.forEach(section => {
+        observer.observe(section);
     });
 });
