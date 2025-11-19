@@ -1,23 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="robots" content="index, follow">
-    <meta name="description" content="Abhijnan | Student and Web Developer. Projects in HTML, CSS, JS, Python and AI.">
-    <meta name="google-site-verification" content="3JWnqFwfh2Oo7CiXpX0z_sMuuu0vSPI8pycd0XFOPb0" />
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Abhijnan | Innovative Developer</title>
-    
-    <link rel="stylesheet" href="portfolio1.css">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- SEO -->
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Abhijnan | Student and Web Developer. Projects in HTML, CSS, JS, Python and AI.">
+    <meta name="google-site-verification" content="3JWnqFwfh2Oo7CiXpX0z_sMuuu0vSPI8pycd0XFOPb0">
+
+    <!-- Fonts + Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="portfolio1.css">
 </head>
+
 <body class="dark-theme">
 
+    <!-- Header -->
     <header class="main-header">
         <div class="logo">A_S</div>
+
         <nav class="main-nav">
             <ul class="nav-links">
                 <li><a href="#projects">Work</a></li>
@@ -25,11 +32,13 @@
                 <li><a href="#contact">Connect</a></li>
             </ul>
         </nav>
+
         <button id="menu-toggle" aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
         </button>
     </header>
 
+    <!-- Mobile Menu -->
     <div id="mobile-menu-overlay" class="mobile-menu-overlay">
         <button class="close-btn"><i class="fas fa-times"></i></button>
         <nav class="mobile-nav">
@@ -40,25 +49,27 @@
             </ul>
         </nav>
     </div>
-    
+
+    <!-- Hero -->
     <section id="hero" class="hero-section">
         <div class="container">
             <div class="hero-intro">
                 <p class="greeting">// Abhijnan, Student Developer</p>
-                <h1 class="fade-in">Crafting **Smart, Connected Experiences**</h1>
+                <h1 class="fade-in">Crafting Smart, Connected Experiences</h1>
                 <p class="tagline fade-in">AI/ML | IoT | Web Technologies</p>
+
                 <div class="cta-area fade-in">
                     <a href="#projects" class="primary-cta">View Recent Work <i class="fas fa-long-arrow-alt-right"></i></a>
                     <a href="#contact" class="secondary-cta">Say Hello</a>
                 </div>
             </div>
-            
+
             <div class="hero-detail-grid">
                 <div class="detail-block code-snippet">
                     <p class="label">Latest Commit:</p>
                     <pre><code>$ git commit -m "feat: New portfolio structure"</code></pre>
                 </div>
-                
+
                 <div class="detail-block skills-list">
                     <p class="label">Core Stack:</p>
                     <ul class="tag-list">
@@ -66,43 +77,49 @@
                         <li>TypeScript</li>
                         <li>React</li>
                         <li>Node.js</li>
-                        <li>Html</li>
+                        <li>HTML</li>
                         <li>CSS</li>
                     </ul>
                 </div>
 
                 <div class="detail-block description">
-                    <p>I'm driven by innovation and the goal of solving real-world problems. My passion lies at the intersection of embedded systems (IoT), intelligent algorithms (AI/ML), and responsive front-end design.</p>
+                    <p>I enjoy building projects that blend IoT hardware, smart algorithms, and clean UI design. My focus is on solving practical problems with efficient, lightweight solutions.</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Expertise -->
     <section id="expertise" class="expertise-section section">
         <div class="container">
-            <h2 class="section-title">// Expertise.</h2>
+            <h2 class="section-title">// Expertise</h2>
+
             <div class="expertise-grid">
                 <div class="expertise-item">
                     <h3>01. AI/ML & Data</h3>
-                    <p>Developing lightweight models and utilizing APIs for real-time data processing, particularly for sensor data and predictive analysis in IoT contexts.</p>
+                    <p>Building lightweight models and using APIs for real-time analysis, especially with sensor data and prediction tasks.</p>
                 </div>
+
                 <div class="expertise-item">
                     <h3>02. IoT & Embedded</h3>
-                    <p>Experience with sensor integration, microcontrollers (e.g., Arduino/ESP32), and building dashboards for remote device management and data visualization.</p>
+                    <p>Working with microcontrollers, sensors, and building dashboards for device monitoring and data visualization.</p>
                 </div>
+
                 <div class="expertise-item">
                     <h3>03. Web Development</h3>
-                    <p>Building scalable, modern interfaces using the T3 stack (Next.js, TypeScript, Tailwind) ensuring performance and a great user experience.</p>
+                    <p>Developing fast and modern interfaces using the T3 stack: Next.js, TypeScript and Tailwind.</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Projects -->
     <section id="projects" class="projects-section section">
         <div class="container">
-            <h2 class="section-title">// Selected Work.</h2>
+            <h2 class="section-title">// Selected Work</h2>
+
             <div class="projects-list">
-                
+
                 <a href="https://abhijnansahariah1.github.io/DriverMonitoringSystem/" target="_blank" class="project-item">
                     <span class="project-year">2024</span>
                     <span class="project-title-name">Driver Monitoring System</span>
@@ -112,38 +129,44 @@
 
                 <a href="https://abhijnansahariah1.github.io/Multi-Game/" target="_blank" class="project-item">
                     <span class="project-year">2023</span>
-                    <span class="project-title-name">GameHub Pro (Multi-Game Platform)</span>
+                    <span class="project-title-name">GameHub Pro</span>
                     <span class="project-tags">#JavaScript #HTML #GameLogic</span>
                     <i class="fas fa-external-link-alt project-link-icon"></i>
                 </a>
 
-                 <a href="https://github.com/AbhijnanSahariah1/portfolio-v1" target="_blank" class="project-item">
+                <a href="https://github.com/AbhijnanSahariah1/portfolio-v1" target="_blank" class="project-item">
                     <span class="project-year">2023</span>
-                    <span class="project-title-name">Portfolio V1 (Foundation)</span>
+                    <span class="project-title-name">Portfolio V1</span>
                     <span class="project-tags">#HTML #CSS #Design</span>
                     <i class="fas fa-external-link-alt project-link-icon"></i>
                 </a>
+
             </div>
         </div>
     </section>
 
+    <!-- Contact -->
     <section id="contact" class="contact-section section">
         <div class="container">
-            <h2 class="section-title">// Get In Touch.</h2>
+            <h2 class="section-title">// Get In Touch</h2>
+
             <p class="contact-text">
-                I'm currently seeking collaborative opportunities in innovative technology projects. Feel free to reach out via email or connect with me on professional platforms.
+                I'm always open to meaningful tech collaboration. Reach out anytime.
             </p>
+
             <div class="contact-links-grid">
                 <a href="mailto:AbhijnanSahariah18@gmail.com" class="contact-link-card">
                     <i class="fas fa-envelope"></i>
                     <p>Email Me</p>
                     <span>AbhijnanSahariah18@gmail.com</span>
                 </a>
+
                 <a href="https://linkedin.com/in/abhijnan" target="_blank" class="contact-link-card">
                     <i class="fab fa-linkedin-in"></i>
                     <p>LinkedIn</p>
                     <span>/in/abhijnan</span>
                 </a>
+
                 <a href="https://github.com/AbhijnanSahariah1" target="_blank" class="contact-link-card">
                     <i class="fab fa-github"></i>
                     <p>GitHub</p>
@@ -153,16 +176,17 @@
         </div>
     </section>
 
+    <!-- Footer -->
     <footer class="main-footer">
         <div class="container">
-            <p>&copy; 2025 Abhijnan Sahariah </i> All right reserved.</p>
+            <p>&copy; 2025 Abhijnan Sahariah. All rights reserved.</p>
         </div>
     </footer>
 
+    <!-- Script -->
     <script src="portfolio1.js"></script>
 </body>
 </html>
-
 
 
 
