@@ -9,18 +9,18 @@
 /* ========================================= */
 
 :root {
-    --bg-primary: #0a0a0a;      /* Ultra Deep Black */
-    --bg-secondary: #1a1a1a;    /* Card/Block Background */
-    --text-primary: #f0f0f0;    /* White/Light Text */
-    --text-secondary: #888888;  /* Muted Gray Text */
-    --accent-color: #9933ff;    /* Violet/Purple Accent */
-    --accent-hover: #7a29cc;    
-    --border-color: #333333;    /* Thin dividing lines */
+    --bg-primary: #0a0a0a;       /* Ultra Deep Black */
+    --bg-secondary: #1a1a1a;     /* Card/Block Background */
+    --text-primary: #f0f0f0;     /* White/Light Text */
+    --text-secondary: #888888;   /* Muted Gray Text */
+    --accent-color: #9933ff;     /* Violet/Purple Accent */
+    --accent-hover: #7a29cc;
+    --border-color: #333333;     /* Thin dividing lines */
     
     --font-heading: 'Poppins', sans-serif;
-    --font-mono: 'Space Mono', monospace; 
+    --font-mono: 'Space Mono', monospace;
     --transition-speed: 0.3s;
-    --padding-sides: 80px; 
+    --padding-sides: 80px;
 }
 
 * {
@@ -49,7 +49,7 @@ a:hover {
 .container {
     max-width: 1300px;
     margin: 0 auto;
-    padding: 0 var(--padding-sides); 
+    padding: 0 var(--padding-sides);
 }
 
 /* ========================================= */
@@ -67,7 +67,7 @@ a:hover {
 }
 
 .logo {
-    font-size: 1.5rem; 
+    font-size: 1.5rem;
     font-family: var(--font-mono);
     font-weight: 700;
     color: var(--accent-color);
@@ -93,7 +93,7 @@ a:hover {
 }
 
 #menu-toggle {
-    display: none; 
+    display: none;
     background: none;
     border: none;
     color: var(--text-primary);
@@ -109,7 +109,7 @@ a:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(10, 10, 10, 0.98); 
+    background-color: rgba(10, 10, 10, 0.98);
     z-index: 1500;
     flex-direction: column;
     justify-content: center;
@@ -161,7 +161,7 @@ a:hover {
 
 .hero-section .container {
     display: grid;
-    grid-template-columns: 3fr 2fr; 
+    grid-template-columns: 3fr 2fr;
     gap: 80px;
     align-items: center;
 }
@@ -205,7 +205,7 @@ a:hover {
     display: flex;
     align-items: center;
     background-color: var(--accent-color);
-    color: var(--bg-primary); 
+    color: var(--bg-primary);
     padding: 12px 25px;
     border-radius: 4px;
     font-weight: 600;
@@ -246,7 +246,7 @@ a:hover {
 /* Right Column Grid */
 .hero-detail-grid {
     display: grid;
-    grid-template-rows: 1fr auto 1fr; 
+    grid-template-rows: 1fr auto 1fr;
     gap: 20px;
     padding: 40px 0;
 }
@@ -266,7 +266,7 @@ a:hover {
 }
 
 .code-snippet {
-    align-self: start; 
+    align-self: start;
 }
 
 .code-snippet pre {
@@ -280,7 +280,7 @@ a:hover {
 }
 
 .skills-list {
-    align-self: center; 
+    align-self: center;
 }
 
 .tag-list {
@@ -300,7 +300,7 @@ a:hover {
 }
 
 .description {
-    align-self: end; 
+    align-self: end;
 }
 
 .description p {
@@ -315,13 +315,13 @@ a:hover {
 /* ========================================= */
 .section {
     padding: 120px 0;
-    border-top: 1px solid var(--border-color); 
-    opacity: 0; 
+    border-top: 1px solid var(--border-color);
+    opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
-.section.visible { 
+.section.visible {
     opacity: 1;
     transform: translateY(0);
 }
@@ -376,14 +376,14 @@ a:hover {
 .projects-list {
     display: flex;
     flex-direction: column;
-    gap: 1px; 
+    gap: 1px;
     border-top: 1px solid var(--border-color);
     border-bottom: 1px solid var(--border-color);
 }
 
 .project-item {
     display: grid;
-    grid-template-columns: 0.5fr 3fr 1.5fr 0.1fr; 
+    grid-template-columns: 0.5fr 3fr 1.5fr 0.1fr;
     align-items: center;
     padding: 20px 0;
     border-bottom: 1px solid var(--border-color);
@@ -498,7 +498,7 @@ a:hover {
 }
 
 .main-footer i {
-    color: #ff4d4d; 
+    color: #ff4d4d;
     margin: 0 3px;
 }
 
@@ -507,27 +507,23 @@ a:hover {
 /* ========================================= */
 @media (max-width: 1000px) {
     :root {
-        --padding-sides: 40px; 
+        --padding-sides: 40px;
     }
     
     .hero-section .container {
-        grid-template-columns: 1fr; 
+        grid-template-columns: 1fr;
         gap: 50px;
     }
     
     .hero-intro h1 {
         font-size: 3rem;
     }
-
-    .projects-list {
-        padding: 0 10px;
-    }
-
+    
+    /* Project Item: Refined Grid for Tablet */
     .project-item {
-        grid-template-columns: 1fr 2fr; 
-        grid-template-areas: 
-            "year tags"
-            "title icon";
+        grid-template-columns: 100px 1fr 1fr 20px;
+        grid-template-areas:
+            "year title tags icon";
         gap: 0;
         padding: 15px 0;
     }
@@ -535,21 +531,80 @@ a:hover {
     .project-year { grid-area: year; text-align: left; }
     .project-title-name { grid-area: title; font-size: 1.1rem;}
     .project-tags { grid-area: tags; text-align: right; }
-    .project-link-icon { grid-area: icon; padding-left: 10px; }
+    .project-link-icon { grid-area: icon; padding-left: 0; text-align: right; }
 }
 
 @media (max-width: 600px) {
     :root {
         --padding-sides: 20px;
     }
+    .main-header {
+        padding: 20px var(--padding-sides);
+    }
+    
+    .section {
+        padding: 80px 0; /* Reduce large vertical padding */
+    }
+    
+    .section-title {
+        font-size: 1.5rem; /* Smaller section titles */
+        margin-bottom: 40px;
+    }
+    
     .hero-intro h1 {
         font-size: 2.5rem;
     }
     
+    .hero-intro .tagline {
+        font-size: 1.1rem;
+    }
+    
+    /* Show mobile menu toggle, hide desktop nav */
     .main-nav .nav-links { display: none; }
     #menu-toggle { display: block; }
     
+    /* Stack CTAs vertically on mobile */
+    .cta-area {
+        flex-direction: column;
+        gap: 20px;
+        align-items: stretch;
+    }
+    
+    /* Hero Detail Grid: Ensure blocks use full width */
+    .hero-detail-grid {
+        grid-template-columns: 1fr;
+        padding: 0; /* Remove extra padding */
+    }
+    
     .expertise-grid {
         gap: 20px;
+    }
+    
+    /* Project Item: Stack year and tags on separate lines, maximize title width */
+    .project-item {
+        /* Stack to four horizontal blocks */
+        grid-template-columns: 1fr 1fr 20px;
+        grid-template-areas:
+            "year tags ."
+            "title title icon";
+        
+        border-radius: 4px; /* Give list items a slight card look for separation */
+        margin-bottom: 5px;
+        border: 1px solid var(--border-color); /* Add border for definition */
+    }
+    
+    .project-year { font-size: 0.8rem; margin-bottom: 5px; }
+    .project-tags { font-size: 0.75rem; margin-bottom: 5px; }
+    .project-title-name { font-size: 1rem; }
+    
+    /* Contact Grid: Ensure full width stacking */
+    .contact-links-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    /* Footer cleanup */
+    .main-footer {
+        padding: 20px 0;
     }
 }
