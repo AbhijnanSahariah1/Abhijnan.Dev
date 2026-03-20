@@ -39,6 +39,21 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  position: relative;
+}
+
+/* Full-page persistent grid lines */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 80px 80px;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
 }
 
 a {
@@ -63,9 +78,16 @@ a {
   padding: 0 56px;
 }
 
-/* ═══════════════════════════════════════════
-   LOADER
-═══════════════════════════════════════════ */
+/* Sit above the body grid */
+.hdr,
+.mmenu,
+#loader,
+.c,
+section,
+footer {
+  position: relative;
+  z-index: 1;
+}
 #loader {
   position: fixed;
   inset: 0;
@@ -275,17 +297,7 @@ a {
   overflow: hidden;
 }
 
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 80px 80px;
-  opacity: 0.35;
-  pointer-events: none;
-}
+/* grid handled globally by body::before */
 
 .hero-glow {
   position: absolute;
