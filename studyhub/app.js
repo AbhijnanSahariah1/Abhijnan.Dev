@@ -59,15 +59,21 @@ const subjectNames = Object.keys(SUBJECTS);
 
 function loadState() {
   try {
-    const saved = JSON.parse(localStorage.getItem(STORE_KEY));
+    const savedText = localStorage.getItem(STORE_KEY);
+    const saved = savedText ? JSON.parse(savedText) : null;
     if (saved && typeof saved === "object") {
       return {
         ...structuredCloneSafe(DEFAULT_STATE), ...saved,
         settings: {...DEFAULT_STATE.settings, ...(saved.settings || {})},
-        completed: saved.completed || {}, tasks: saved.tasks || [], notes: saved.notes || {}, tests: saved.tests || []
+        completed: saved.completed && typeof saved.completed === "object" ? saved.completed : {},
+        tasks: Array.isArray(saved.tasks) ? saved.tasks : [],
+        notes: saved.notes && typeof saved.notes === "object" ? saved.notes : {},
+        tests: Array.isArray(saved.tests) ? saved.tests : []
       };
     }
-  } catch (error) { console.warn("Could not read saved StudyHub data.", error); }
+  } catch (error) {
+    console.warn("Could not read saved StudyHub data. Starting with defaults.", error);
+  }
   return structuredCloneSafe(DEFAULT_STATE);
 }
 function structuredCloneSafe(value) { return JSON.parse(JSON.stringify(value)); }
