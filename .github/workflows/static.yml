@@ -1,12 +1,8 @@
-name: Deploy StudyHub to GitHub Pages
+name: Deploy portfolio and StudyHub to GitHub Pages
 
 on:
   push:
     branches: ["main"]
-    paths:
-      - "studyhub/**"
-      - ".github/workflows/static.yml"
-      - ".github/workflows/deploy-studyhub.yml"
   workflow_dispatch:
 
 permissions:
@@ -29,17 +25,13 @@ jobs:
         uses: actions/checkout@v4
       - name: Configure Pages
         uses: actions/configure-pages@v5
-      - name: Prepare StudyHub website
-        run: |
-          mkdir -p _site
-          cp -R studyhub/. _site/
-      - name: Upload StudyHub artifact
+      - name: Upload portfolio and StudyHub
         uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
-          name: studyhub-pages
-      - name: Deploy StudyHub
+          path: "."
+          name: "portfolio-studyhub-pages"
+      - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
         with:
-          artifact_name: studyhub-pages
+          artifact_name: "portfolio-studyhub-pages"
