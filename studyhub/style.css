@@ -333,7 +333,9 @@ a {color:var(--accent)}
   .search-wrap input {font-size:11px;padding:10px 0}
   .top-actions {margin-left:0;gap:6px}
   .top-actions .icon-button {width:38px;min-width:38px;min-height:40px}
-  .export-button {display:none}
+  .export-button {display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:7px 9px;font-size:10px;white-space:nowrap}
+  .export-full {display:none}
+  .export-short {display:inline}
   .welcome-row {align-items:flex-start;flex-direction:column;gap:13px;margin-bottom:18px}
   .welcome-row h1,.page-heading h1 {font-size:clamp(25px,6vw,32px);letter-spacing:-1.15px}
   .welcome-actions {width:100%;align-items:center;justify-content:space-between;flex-direction:row;gap:8px;flex-wrap:wrap}
@@ -411,3 +413,5 @@ a {color:var(--accent)}
 @media (hover:none) {
   .subject-card:hover,.quick-links button:hover,.button:hover {transform:none}
 }
+
+@media (min-width:761px) { .export-short {display:none} }
