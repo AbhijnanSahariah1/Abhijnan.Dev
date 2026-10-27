@@ -56,3 +56,45 @@ h1,h2,h3,.brand{font-family:Georgia,"Times New Roman",serif;letter-spacing:-.025
 .info-box{background:var(--surface-soft)}
 @media(max-width:650px){.guide-controls{grid-template-columns:1fr}.prepared-note-heading{align-items:center}.note-library-mark{min-width:55px;min-height:55px;font-size:13px}.guide-actions .button{width:100%}}
 @media print{.sidebar,.topbar,.guide-controls,.guide-actions,.footer,.form-actions{display:none!important}.main{margin:0;padding:0}.page{display:none!important}#page-notes{display:block!important}.prepared-notes-panel{border:0;box-shadow:none}.guide-content{background:white;color:#222}.guide-content p,.guide-content li{color:#222}}
+
+
+/* A hand-tuned study journal: paper tones, sage green, restrained bars */
+:root{
+ --bg:#f4f1e9;--surface:#fffdf8;--surface-soft:#eeeae0;--text:#29352f;
+ --muted:#717a70;--line:#dfdacd;--accent:#58745a;--accent-soft:#e4ebe0;
+ --success:#367758;--warning:#91672a;--shadow:0 2px 7px rgba(39,50,39,.025)
+}
+:root[data-theme="dark"]{
+ --bg:#1b231f;--surface:#242e28;--surface-soft:#2d3830;--text:#f0eee5;
+ --muted:#aab4a8;--line:#3b473e;--accent:#abc4a3;--accent-soft:#35473a;
+ --success:#8fcea3;--warning:#dfbb84;--shadow:0 2px 7px rgba(0,0,0,.08)
+}
+body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:0}
+h1,h2,h3,.brand{font-family:Georgia,"Times New Roman",serif;letter-spacing:-.025em}
+.sidebar{box-shadow:none}.brand-mark{border-radius:5px;background:var(--accent);color:#fff}
+.nav-link{border-radius:5px}.nav-link.active{background:var(--accent-soft);box-shadow:inset 3px 0 var(--accent)}
+.exam-strip{background:var(--surface-soft);border-color:transparent}
+.stat-card,.panel,.subject-card{border-radius:5px;box-shadow:none}
+.stat-card{border:0;border-left:2px solid var(--accent);background:var(--surface)}
+.progress{height:6px;border-radius:2px;background:var(--surface-soft)}
+.progress span{border-radius:2px;background:var(--accent)}
+.subject-card{transition:border-color .15s ease}.subject-card:hover{transform:none;border-color:var(--accent)}
+.button,.icon-button{border-radius:5px}.button-primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.personal-study-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0 0}
+.week-panel,.assistant-panel{min-width:0}
+.week-bars{height:126px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;align-items:end;padding:6px 1px 0}
+.week-day{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:7px;min-width:0}
+.week-track{height:86px;width:min(24px,100%);display:flex;align-items:flex-end;background:var(--surface-soft);border-radius:3px 3px 0 0;overflow:hidden}
+.week-fill{display:block;width:100%;min-height:0;background:var(--accent);border-radius:3px 3px 0 0;transition:height .25s ease}
+.week-day.today .week-track{outline:1px solid var(--accent);outline-offset:2px}
+.week-day small{font-size:10px;color:var(--muted)}.week-day strong{font-size:10px;font-weight:600}
+.assistant-top{display:flex;align-items:center;gap:12px;margin-bottom:9px}
+.assistant-stamp{width:39px;height:39px;flex:0 0 auto;border:1px solid var(--accent);border-radius:50%;display:grid;place-items:center;color:var(--accent);font-family:Georgia,serif;font-size:14px}
+.assistant-top h2{font-size:20px;font-weight:500;margin:0}
+.assistant-intro{font-size:12px;line-height:1.65}.assistant-label{margin:12px 0}
+.assistant-panel .button{width:100%}.assistant-reply{margin-top:12px;border-left:2px solid var(--accent);padding:11px 13px;background:var(--surface-soft);font-size:12px;line-height:1.7;white-space:pre-line}
+.settings-panel #settingsForm{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.settings-panel #settingsForm .form-actions{grid-column:1/-1}.settings-panel #settingsForm .form-label{align-self:start}
+#studentName{text-transform:none}
+@media(max-width:900px){.personal-study-row{grid-template-columns:1fr}}
+@media(max-width:650px){.settings-panel #settingsForm{grid-template-columns:1fr}.settings-panel #settingsForm .form-actions{grid-column:auto}.week-bars{gap:6px}}
