@@ -336,6 +336,84 @@ function renderProgress() {
   $("testHistory").innerHTML = state.tests.length ? [...state.tests].reverse().map(test => `
     <div class="test-row"><div><b>${escapeHTML(test.name)}</b><small>${escapeHTML(test.date)} · ${test.score}/${test.total} marks</small></div><b>${Math.round(test.score/test.total*100)}%</b></div>`).join("") : '<div class="empty-state">No test results yet. Complete a quiz or record a test result.</div>';
 }
+
+function formatExamPercent(percent) {
+  if (percent === null || !Number.isFinite(percent)) return "—";
+  return `${Number(percent.toFixed(1))}%`;
+}
+function examStats(kind, recordsOverride = null) {
+  const records = recordsOverride || state.examScores?.[kind] || {};
+  let count = 0, obtained = 0, total = 0;
+  subjectNames.forEach(subject => {
+    const entry = records[subject];
+    if (!entry || entry.obtained === "" || entry.obtained === null || entry.obtained === undefined) return;
+    const score = Number(entry.obtained), maximum = Number(entry.total);
+    if (!Number.isFinite(score) || !Number.isFinite(maximum) || maximum <= 0 || score < 0 || score > maximum) return;
+    count++; obtained += score; total += maximum;
+  });
+  return {count, obtained, total, percent: total > 0 ? obtained / total * 100 : null};
+}
+function collectExamScoresFromForm(kind) {
+  const form = $(kind === "preboard" ? "preboardScoreForm" : "boardScoreForm");
+  const records = {};
+  form.querySelectorAll("[data-score-subject]").forEach(row => {
+    const subject = row.dataset.scoreSubject;
+    const obtained = row.querySelector('[data-score-part="obtained"]').value.trim();
+    const total = row.querySelector('[data-score-part="total"]').value.trim();
+    records[subject] = {obtained, total};
+  });
+  return records;
+}
+function paintExamScore(kind, stats) {
+  const prefix = kind === "preboard" ? "preboard" : "board";
+  $(`${prefix}ScorePercent`).textContent = formatExamPercent(stats.percent);
+  $(`${prefix}ScoreSummary`).textContent = stats.count
+    ? `${stats.count} of ${subjectNames.length} subjects · ${stats.obtained} / ${stats.total} marks`
+    : "No subject marks entered yet.";
+}
+function updateExamScorePreview(kind) {
+  paintExamScore(kind, examStats(kind, collectExamScoresFromForm(kind)));
+}
+function renderExamScores() {
+  ["preboard","board"].forEach(kind => {
+    const container = $(`${kind}ScoreFields`);
+    if (!container) return;
+    const records = state.examScores?.[kind] || {};
+    container.innerHTML = subjectNames.map(subject => {
+      const entry = records[subject] || {};
+      const obtained = entry.obtained ?? "";
+      const maximum = entry.total ?? "80";
+      return `<div class="score-subject-row" data-score-subject="${escapeHTML(subject)}">
+        <div class="score-subject-name">${escapeHTML(subject)}</div>
+        <label>Scored<input type="number" min="0" step="0.5" inputmode="decimal" placeholder="—" aria-label="${escapeHTML(subject)} marks obtained" data-score-kind="${kind}" data-score-part="obtained" value="${escapeHTML(obtained)}"></label>
+        <label>Out of<input type="number" min="1" step="0.5" inputmode="decimal" aria-label="${escapeHTML(subject)} maximum marks" data-score-kind="${kind}" data-score-part="total" value="${escapeHTML(maximum)}"></label>
+      </div>`;
+    }).join("");
+    paintExamScore(kind, examStats(kind));
+    updateExamScorePreview(kind);
+  });
+}
+function saveExamScores(event, kind) {
+  event.preventDefault();
+  const records = collectExamScoresFromForm(kind);
+  let entered = 0;
+  for (const [subject, entry] of Object.entries(records)) {
+    if (entry.obtained === "") continue;
+    const score = Number(entry.obtained), maximum = Number(entry.total);
+    if (!Number.isFinite(score) || !Number.isFinite(maximum) || maximum <= 0 || score < 0 || score > maximum) {
+      toast(`Check ${subject}: marks obtained must be between 0 and the maximum marks.`);
+      return;
+    }
+    entered++;
+  }
+  if (!entered) {
+    toast("Enter marks for at least one subject before saving.");
+    return;
+  }
+  state.examScores[kind] = records;
+  persist(kind === "preboard" ? "Pre-board marks saved." : "Board marks saved.");
+}
+
 function addTask(title, subject, date, duration=30) {
   state.tasks.push({id:crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`, title, subject, date, duration, done:false});
 }
@@ -529,52 +607,167 @@ function init() {
 init();
 
 /* Prepared chapter notes: reader, personal-note handoff, download and revision task. */
+
+function fallbackChapterNote(subject, chapter) {
+  const common = {
+    "Mathematics": {
+      overview: `${chapter} can be revised by identifying the given information, selecting the matching theorem or formula, showing each step clearly, and checking the final result.`,
+      points: ["Write the required formula or theorem before substituting values.", "Show enough working for each step and keep units or signs consistent.", "Check the answer by substitution, estimation, or a second method when possible."],
+      practice: `Write the key formula for ${chapter}, solve one textbook example without looking at the solution, and explain why each step works.`
+    },
+    "Science": {
+      overview: `Use this chapter outline for ${chapter}: learn the central scientific idea, connect it to a process or labelled diagram, and practise applying it to a new example.`,
+      points: ["Learn the definition and the scientific reason behind it.", "For processes, remember the sequence and what enters or leaves each stage.", "Practise labelled diagrams, units, equations, observations, and reasoning where relevant."],
+      practice: `Explain ${chapter} in your own words, draw a labelled diagram if relevant, and answer one “why” and one application question.`
+    },
+    "Social Science": {
+      overview: `Revise ${chapter} by organising the main concepts, people or places, causes, events, and effects into a clear sequence.`,
+      points: ["Use accurate key terms, dates, places, and examples from the prescribed text.", "Link causes to developments and consequences rather than memorising isolated facts.", "For map-based topics, practise the exact locations specified by your school syllabus."],
+      practice: `Create a short cause–event–impact chart for ${chapter} and write one structured answer using specific examples.`
+    },
+    "English": {
+      overview: `For ${chapter}, focus on the central idea, characters or speaker, key events, tone, and the evidence that supports an interpretation.`,
+      points: ["Summarise the text in sequence and distinguish the main idea from details.", "Support character or theme interpretations with a specific moment from the text.", "For literature answers, explain how the evidence supports the point instead of retelling the whole story."],
+      practice: `Write a 100–120 word response about the main idea of ${chapter}, using a specific example from the text.`
+    },
+    "Hindi A": {
+      overview: `${chapter} के लिए मुख्य भाव, प्रसंग, भाषा-शैली और लेखक या कवि के संदेश को अपने शब्दों में समझें।`,
+      points: ["पाठ या कविता का केंद्रीय भाव स्पष्ट रूप से लिखें।", "उत्तर में प्रसंग, उदाहरण और संदेश का उचित संबंध रखें।", "शब्दार्थ, काव्य-सौंदर्य और पात्रों के व्यवहार को पाठ के अनुसार दोहराएँ।"],
+      practice: `${chapter} का सार अपने शब्दों में लिखें और मुख्य संदेश पर एक प्रश्न का उत्तर दें।`
+    },
+    "AI (417)": {
+      overview: `For ${chapter}, connect the core term to a real problem, the data or steps involved, and how you would check the result responsibly.`,
+      points: ["Learn the definition and one real-world example.", "Know the sequence of steps and the purpose of each step.", "Explain limitations, evaluation, privacy, fairness, and responsible use where relevant."],
+      practice: `Define the main idea in ${chapter}, give one example, and describe how you would evaluate the result.`
+    }
+  };
+  return common[subject] || {overview:`Use this revision outline for ${chapter}.`,points:["Learn the key terms.","Summarise the main idea.","Practise one exam-style question."],practice:`Summarise ${chapter} and attempt one exam-style question.`};
+}
 function preparedNoteFor(subject, chapter) {
   const subjectNotes = window.STUDY_NOTES && window.STUDY_NOTES[subject];
-  if (!subjectNotes) return null;
+  if (!subjectNotes) return fallbackChapterNote(subject, chapter);
   let key = chapter;
-  if (subject === "AI (417)") key = chapter.replace(/^Employability Skills:\s*/, "");
-  return subjectNotes[key] || null;
+  if (subject === "AI (417)") key = chapter.replace(/^Employability Skills:\\s*/, "");
+  return subjectNotes[key] || fallbackChapterNote(subject, chapter);
 }
-function fillGuideChapters() {
+function visualStepsFor(subject, chapter) {
+  const text = `${subject} ${chapter}`.toLowerCase();
+  if (subject === "Mathematics") {
+    if (/probability/.test(text)) return [["Sample space","List all outcomes"],["Favourable","Count wanted outcomes"],["Formula","P(E)=n(E)/n(S)"],["Check","0 ≤ P(E) ≤ 1"]];
+    if (/trigonometry/.test(text)) return [["Angle θ","Choose the angle"],["Sides","Opposite / adjacent"],["Ratio","sin, cos or tan"],["Verify","Check the triangle"]];
+    if (/progression|sequence|series/.test(text)) return [["First term a","Start value"],["Difference d","Find the pattern"],["Nth term","aₙ=a+(n−1)d"],["Sum","Use the matching formula"]];
+    if (/circle|tangent|area/.test(text)) return [["Given","Mark radius / length"],["Rule","Choose the theorem"],["Substitute","Show each step"],["Units","Check the final area"]];
+    if (/quadratic|polynomial|linear/.test(text)) return [["Equation","Arrange the terms"],["Method","Factor or solve"],["Roots","Find the values"],["Verify","Substitute back"]];
+    return [["Given values","List what is known"],["Rule","Select a formula"],["Working","Show each step"],["Check","Verify the result"]];
+  }
+  if (subject === "Science") {
+    if (/electricity|magnetic/.test(text)) return [["Source","Cell / supply"],["Current","Charge in a circuit"],["Component","Load / resistance"],["Measure","Use correct units"]];
+    if (/environment/.test(text)) return [["Sunlight","Energy source"],["Producer","Plants"],["Consumer","Feeds on others"],["Decomposer","Returns nutrients"]];
+    if (/heredity|reproduce/.test(text)) return [["Parents","Genetic information"],["Gametes","Carry alleles"],["Fertilisation","Combine information"],["Offspring","Traits appear"]];
+    if (/light:|human eye|colourful/.test(text)) return [["Light ray","Incident ray"],["Surface / lens","Reflect or refract"],["Direction","Angle changes"],["Image","Position / nature"]];
+    if (/chemical|acid|metal|carbon/.test(text)) return [["Reactants","Starting substances"],["Condition","Heat / catalyst"],["Change","Reaction occurs"],["Products","Observe and write"]];
+    if (/life processes|control|coordination/.test(text)) return [["Input","Stimulus / materials"],["Process","Body system works"],["Transport","Move / coordinate"],["Response","Result / output"]];
+    return [["Structure","Identify parts"],["Process","Show the sequence"],["Observation","Record the change"],["Reason","Explain why"]];
+  }
+  if (subject === "Social Science") {
+    if (/resources|water|agriculture|minerals|manufacturing|lifelines|forest/.test(text)) return [["Resource","What / where"],["Use","People and needs"],["Impact","Economy / nature"],["Plan","Sustainable choice"]];
+    if (/development|sectors|money|globalisation|consumer/.test(text)) return [["Need","Identify the issue"],["System","People / institutions"],["Effect","Who benefits?"],["Choice","Evidence-based view"]];
+    return [["Background","Context and causes"],["Development","Key event / idea"],["People","Actions and choices"],["Impact","Outcome and legacy"]];
+  }
+  if (subject === "AI (417)") return [["Problem","Define the goal"],["Data","Collect and prepare"],["Model","Train / process"],["Evaluate","Test and improve"]];
+  if (subject === "Hindi A") return [["प्रसंग","पाठ का संदर्भ"],["भाव","मुख्य विचार"],["भाषा","शैली / उदाहरण"],["संदेश","निष्कर्ष"]];
+  return [["Read","Understand the text"],["Notice","Find useful clues"],["Interpret","Explain meaning"],["Support","Use text evidence"]];
+}
+function conceptDiagramMarkup(subject, chapter) {
+  const steps = visualStepsFor(subject, chapter);
+  const boxes = steps.map((step,index) => {
+    const x = 18 + index * 185;
+    return `<g>
+      <rect x="${x}" y="36" width="158" height="88" rx="10" fill="${index===3?"#132c2b":"#0e1219"}" stroke="${index===3?"#67e4d0":"#2c3644"}" stroke-width="1.3"/>
+      <circle cx="${x+17}" cy="53" r="9" fill="${index===3?"#67e4d0":"#202d3c"}"/>
+      <text x="${x+17}" y="56.5" text-anchor="middle" font-size="9" font-weight="800" fill="${index===3?"#06100f":"#a9bacb"}">${index+1}</text>
+      <text x="${x+12}" y="78" font-size="12" font-weight="700" fill="#f2f6fc">${escapeHTML(step[0])}</text>
+      <text x="${x+12}" y="97" font-size="9.5" fill="#9ca9ba">${escapeHTML(step[1])}</text>
+    </g>`;
+  }).join("");
+  const arrows = [0,1,2].map(index => {
+    const x = 176 + index * 185;
+    return `<path d="M ${x} 80 H ${x+22}" stroke="#67e4d0" stroke-width="1.6" fill="none" marker-end="url(#studyArrow)"/>`;
+  }).join("");
+  return `<figure class="concept-visual">
+    <svg viewBox="0 0 758 151" role="img" aria-label="Original schematic for ${escapeHTML(chapter)}" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="studyArrow" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#67e4d0"/></marker></defs>
+      ${arrows}${boxes}
+      <text x="20" y="20" font-size="9" font-weight="800" letter-spacing="1.5" fill="#67e4d0">VISUAL REVISION MODEL</text>
+    </svg>
+    <figcaption>Original concept schematic for ${escapeHTML(chapter)}. Use the steps to recall the idea, then draw your own detailed labelled diagram in your notebook when the topic requires one.</figcaption>
+  </figure>`;
+}
+function renderNoteChapterResults(query = "") {
+  const target = $("noteChapterResults");
+  if (!target) return;
+  const chapters = allChapters();
+  const needle = String(query || "").trim().toLocaleLowerCase();
+  const matches = chapters.filter(item => !needle || `${item.subject} ${item.chapter}`.toLocaleLowerCase().includes(needle));
+  const visible = needle ? matches.slice(0,24) : matches.slice(0,12);
+  const suffix = needle ? `${matches.length} matching chapter${matches.length===1?"":"s"}` : `Browse all ${chapters.length} tracked chapters · search to filter`;
+  target.innerHTML = `<p class="note-library-progress">${escapeHTML(suffix)}${matches.length>visible.length?" · showing first "+visible.length:""}</p>` +
+    (visible.length ? visible.map((item,index) => `<button type="button" class="note-chapter-result ${$("guideSubject")?.value===item.subject && $("guideChapter")?.value===item.chapter?"active":""}" data-note-subject="${escapeHTML(item.subject)}" data-note-chapter="${escapeHTML(item.chapter)}">
+      <span><strong>${escapeHTML(item.chapter)}</strong><small>${escapeHTML(item.subject)}</small></span><span class="note-number">${String(index+1).padStart(2,"0")} ↗</span>
+    </button>`).join("") : '<p class="empty-state">No chapter matched. Try another word.</p>');
+}
+
+function fillGuideChapters(preferredChapter = "") {
   const subject = $("guideSubject").value;
   const chapters = SUBJECTS[subject].chapters;
+  const previousChapter = $("guideChapter").value;
   $("guideChapter").innerHTML = chapters.map(chapter =>
     `<option value="${escapeHTML(chapter)}">${escapeHTML(chapter)}</option>`
   ).join("");
+  const wanted = preferredChapter || previousChapter;
+  if (chapters.includes(wanted)) $("guideChapter").value = wanted;
   renderPreparedGuide();
+  renderNoteChapterResults($("noteSearch")?.value || "");
 }
 function renderPreparedGuide() {
   const subject = $("guideSubject").value;
   const chapter = $("guideChapter").value;
+  if (!subject || !chapter) return;
   const note = preparedNoteFor(subject, chapter);
   const all = SUBJECTS[subject].chapters;
-  const index = all.indexOf(chapter);
-  const chapterNumber = index >= 0 ? index + 1 : 0;
-  if (!note) {
-    $("guideContent").innerHTML = `<p class="guide-label">${escapeHTML(subject)}</p><h3>${escapeHTML(chapter)}</h3><p>Prepared notes for this chapter are not available in the notes file yet. Use your personal notes editor below to save your own notes.</p>`;
-    return;
-  }
+  const chapterNumber = all.indexOf(chapter) + 1;
+  const points = note.points || [];
+  const visual = conceptDiagramMarkup(subject, chapter);
+  const remember = points[0] || "Recall the key definitions and explain the idea in your own words.";
   $("guideContent").innerHTML = `
     <p class="guide-label">${escapeHTML(subject)} · Chapter ${chapterNumber} of ${all.length}</p>
     <h3>${escapeHTML(chapter)}</h3>
     <p class="guide-overview">${escapeHTML(note.overview || "")}</p>
+    ${visual}
     <h4>Key ideas to remember</h4>
-    <ul>${(note.points || []).map(point => `<li>${escapeHTML(point)}</li>`).join("")}</ul>
-    <div class="guide-practice"><strong>Check your understanding</strong><p>${escapeHTML(note.practice || "Summarise this chapter in your own words and attempt textbook questions.")}</p></div>`;
+    <ul>${points.map(point => `<li>${escapeHTML(point)}</li>`).join("")}</ul>
+    <div class="note-recall-grid">
+      <div class="note-recall-card"><strong>CORE IDEA</strong><span>${escapeHTML(note.overview || "Summarise the concept in one sentence.")}</span></div>
+      <div class="note-recall-card"><strong>REMEMBER</strong><span>${escapeHTML(remember)}</span></div>
+      <div class="note-recall-card"><strong>EXAM PRACTICE</strong><span>${escapeHTML(note.practice || "Try a textbook question and check your reasoning.")}</span></div>
+    </div>
+    <div class="guide-practice"><strong>Check your understanding</strong><p>${escapeHTML(note.practice || "Summarise this chapter in your own words and attempt textbook questions.")}</p></div>
+    <p class="muted small-text">Use the official textbook for full explanations, exact figures and exam-prescribed content. The schematic above is an original memory aid.</p>`;
+  renderNoteChapterResults($("noteSearch")?.value || "");
 }
 function preparedNoteText() {
   const subject = $("guideSubject").value;
   const chapter = $("guideChapter").value;
   const note = preparedNoteFor(subject, chapter);
   if (!note) return `${chapter}\n\nPrepare your own chapter notes here.\n`;
-  return [subject + " — " + chapter, "", note.overview || "", "", "KEY IDEAS", ...(note.points || []).map(point => "- " + point), "", "PRACTICE", note.practice || ""].join("\n");
+  return [subject + " — " + chapter, "", note.overview || "", "", "VISUAL REVISION MODEL", ...visualStepsFor(subject, chapter).map((step,index) => `${index+1}. ${step[0]}: ${step[1]}`), "", "KEY IDEAS", ...(note.points || []).map(point => "- " + point), "", "PRACTICE", note.practice || ""].join("\n");
 }
 function initPreparedNotes() {
   if (!$("guideSubject") || !window.STUDY_NOTES) return;
   fillSubjectSelect($("guideSubject"));
   fillGuideChapters();
-  $("guideSubject").addEventListener("change", fillGuideChapters);
+  renderNoteChapterResults("");
+  $("guideSubject").addEventListener("change", () => fillGuideChapters());
   $("guideChapter").addEventListener("change", renderPreparedGuide);
   $("copyGuideToEditor").addEventListener("click", () => {
     const subject = $("guideSubject").value;
