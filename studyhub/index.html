@@ -98,6 +98,24 @@
 
     <section class="page" id="page-notes">
       <div class="page-heading"><p class="eyebrow">YOUR PERSONAL REFERENCE</p><h1>Notes library</h1><p class="muted">Keep summaries, formulas, definitions and mistakes in one place.</p></div>
+
+      <section class="panel prepared-notes-panel">
+        <div class="prepared-note-heading">
+          <div><p class="eyebrow">THE REVISION DESK</p><h2>Chapter notes, ready when you are</h2><p class="muted">Concise original notes, key points and a practice prompt for every chapter in the tracker.</p></div>
+          <span class="note-library-mark">Study<br>notes</span>
+        </div>
+        <div class="guide-controls">
+          <label class="form-label">Subject<select id="guideSubject"></select></label>
+          <label class="form-label">Chapter<select id="guideChapter"></select></label>
+        </div>
+        <article id="guideContent" class="guide-content"><p class="muted">Choose a subject and chapter to read the notes.</p></article>
+        <div class="guide-actions">
+          <button class="button button-primary" id="copyGuideToEditor">Copy to my notes editor</button>
+          <button class="button button-outline" id="downloadGuideNote">Download notes (.txt)</button>
+          <button class="button button-outline" id="scheduleGuideRevision">Add revision task</button>
+        </div>
+        <p class="guide-disclaimer">Original revision summaries for learning support. Confirm examinable topics against the official CBSE 2026–27 syllabus and your school’s instructions.</p>
+      </section>
       <div class="notes-layout">
         <section class="panel">
           <label class="form-label">Subject<select id="notesSubject"></select></label>
@@ -144,6 +162,7 @@
     </section>
   </main>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="notes-data.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
