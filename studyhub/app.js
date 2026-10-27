@@ -395,3 +395,81 @@ function init() {
   $("exportData").addEventListener("click", exportBackup);
 }
 init();
+
+/* Prepared chapter notes: reader, personal-note handoff, download and revision task. */
+function preparedNoteFor(subject, chapter) {
+  const subjectNotes = window.STUDY_NOTES && window.STUDY_NOTES[subject];
+  if (!subjectNotes) return null;
+  let key = chapter;
+  if (subject === "AI (417)") key = chapter.replace(/^Employability Skills:\\s*/, "");
+  return subjectNotes[key] || null;
+}
+function fillGuideChapters() {
+  const subject = $("guideSubject").value;
+  const chapters = SUBJECTS[subject].chapters;
+  $("guideChapter").innerHTML = chapters.map(chapter =>
+    `<option value="${escapeHTML(chapter)}">${escapeHTML(chapter)}</option>`
+  ).join("");
+  renderPreparedGuide();
+}
+function renderPreparedGuide() {
+  const subject = $("guideSubject").value;
+  const chapter = $("guideChapter").value;
+  const note = preparedNoteFor(subject, chapter);
+  const all = SUBJECTS[subject].chapters;
+  const index = all.indexOf(chapter);
+  const chapterNumber = index >= 0 ? index + 1 : 0;
+  if (!note) {
+    $("guideContent").innerHTML = `<p class="guide-label">${escapeHTML(subject)}</p><h3>${escapeHTML(chapter)}</h3><p>Prepared notes for this chapter are not available in the notes file yet. Use your personal notes editor below to save your own notes.</p>`;
+    return;
+  }
+  $("guideContent").innerHTML = `
+    <p class="guide-label">${escapeHTML(subject)} · Chapter ${chapterNumber} of ${all.length}</p>
+    <h3>${escapeHTML(chapter)}</h3>
+    <p class="guide-overview">${escapeHTML(note.overview || "")}</p>
+    <h4>Key ideas to remember</h4>
+    <ul>${(note.points || []).map(point => `<li>${escapeHTML(point)}</li>`).join("")}</ul>
+    <div class="guide-practice"><strong>Check your understanding</strong><p>${escapeHTML(note.practice || "Summarise this chapter in your own words and attempt textbook questions.")}</p></div>`;
+}
+function preparedNoteText() {
+  const subject = $("guideSubject").value;
+  const chapter = $("guideChapter").value;
+  const note = preparedNoteFor(subject, chapter);
+  if (!note) return `${chapter}\n\nPrepare your own chapter notes here.\n`;
+  return [subject + " — " + chapter, "", note.overview || "", "", "KEY IDEAS", ...(note.points || []).map(point => "- " + point), "", "PRACTICE", note.practice || ""].join("\n");
+}
+function initPreparedNotes() {
+  if (!$("guideSubject") || !window.STUDY_NOTES) return;
+  fillSubjectSelect($("guideSubject"));
+  fillGuideChapters();
+  $("guideSubject").addEventListener("change", fillGuideChapters);
+  $("guideChapter").addEventListener("change", renderPreparedGuide);
+  $("copyGuideToEditor").addEventListener("click", () => {
+    const subject = $("guideSubject").value;
+    const chapter = $("guideChapter").value;
+    const note = preparedNoteFor(subject, chapter);
+    if (!note) { toast("No prepared notes found for this chapter."); return; }
+    $("notesSubject").value = subject;
+    renderNotesSelectors();
+    $("notesChapter").value = chapter;
+    $("notesEditor").value = [note.overview || "", "KEY IDEAS", ...(note.points || []).map(point => "• " + point), "PRACTICE", note.practice || ""].join("\n\n");
+    $("notesStatus").textContent = "Prepared notes copied into the editor. Press Save notes to keep your own copy.";
+    toast("Copied to your personal notes editor.");
+    $("notesEditor").scrollIntoView({behavior:"smooth",block:"center"});
+  });
+  $("downloadGuideNote").addEventListener("click", () => {
+    const blob = new Blob([preparedNoteText()], {type:"text/plain;charset=utf-8"});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `StudyHub-${$("guideSubject").value.replace(/[^a-z0-9]+/gi,"-")}-notes.txt`;
+    link.click();
+    URL.revokeObjectURL(url);
+    toast("Chapter notes downloaded.");
+  });
+  $("scheduleGuideRevision").addEventListener("click", () => {
+    addTask("Revise: " + $("guideChapter").value, $("guideSubject").value, todayISO(), 20);
+    persist("Revision task added to today's planner.");
+  });
+}
+initPreparedNotes();
