@@ -501,3 +501,25 @@ body {background-color:#000;background-image:linear-gradient(rgba(135,164,196,.0
   .guide-controls .form-label:first-child {grid-column:auto}
   .note-recall-grid {grid-template-columns:1fr}
 }
+
+
+:root[data-theme="midnight"] {
+  color-scheme:dark;--bg:#08090d;--surface:#111319;--surface-soft:#191c25;
+  --text:#f2f1fa;--muted:#a3a3b8;--line:#30313d;--accent:#b5a3ff;
+  --accent-soft:#28213f;--success:#85dcaf;--warning:#f3c77c;
+  --shadow:0 12px 34px rgba(0,0,0,.32);
+}
+:root[data-theme="midnight"] body {
+  background-color:var(--bg);
+  background-image:linear-gradient(rgba(175,160,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(175,160,255,.035) 1px,transparent 1px);
+  background-size:36px 36px;
+}
+.target-percent-field {display:grid;gap:6px;margin:0 0 14px;color:var(--muted);font-size:11px;font-weight:700}
+.target-percent-field input {width:100%;min-height:43px;padding:10px 12px;background:var(--surface-soft);border:1px solid var(--line);border-radius:9px;color:var(--text)}
+.target-percent-field small {font-size:10px;color:var(--accent);font-weight:650}
+.exam-score-summary-metrics small {font-size:9px;color:var(--accent);font-weight:700}
+.specific-diagram svg {max-height:270px}
+@media(max-width:520px) {
+  .specific-diagram svg {min-height:150px}
+  .score-subject-row {grid-template-columns:minmax(0,1fr) minmax(62px,.75fr) minmax(62px,.75fr)}
+}
