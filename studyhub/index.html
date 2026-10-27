@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A personal CBSE Class 10 study planner, syllabus tracker, notes library and practice log.">
+  <title>StudyHub — Class 10</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="#" data-page="dashboard"><span class="brand-mark">S</span><span>StudyHub<small>CBSE · Class 10</small></span></a>
+    <nav class="nav" aria-label="Main navigation">
+      <button class="nav-link active" data-page="dashboard"><span>⌂</span> Dashboard</button>
+      <button class="nav-link" data-page="planner"><span>☷</span> Study planner</button>
+      <button class="nav-link" data-page="syllabus"><span>▦</span> Syllabus tracker</button>
+      <button class="nav-link" data-page="notes"><span>▤</span> Notes library</button>
+      <button class="nav-link" data-page="practice"><span>✓</span> Practice & tests</button>
+      <button class="nav-link" data-page="progress"><span>↗</span> Progress</button>
+      <button class="nav-link" data-page="settings"><span>⚙</span> Settings</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <p>“Little by little, a little becomes a lot.”</p>
+      <span>Made for steady progress.</span>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button class="mobile-menu" id="mobileMenu" aria-label="Toggle navigation">☰</button>
+      <label class="search-wrap"><span>⌕</span><input id="globalSearch" type="search" placeholder="Search chapters, notes or subjects"></label>
+      <div class="top-actions">
+        <button class="icon-button" id="themeToggle" title="Switch theme" aria-label="Switch theme">◐</button>
+        <button class="button button-outline" id="exportData">Export backup</button>
+      </div>
+    </header>
+
+    <section class="page active" id="page-dashboard">
+      <div class="welcome-row">
+        <div><p class="eyebrow">YOUR STUDY SPACE</p><h1>Welcome back, Abhijnan.</h1><p class="muted">Keep it simple. Show up every day.</p></div>
+        <div class="date-label" id="todayLabel"></div>
+      </div>
+      <div class="exam-strip">
+        <div><span class="exam-label">PRE-BOARDS</span><strong id="preboardCountdown">Set a date</strong><small id="preboardDateLabel">Add your exam date in settings</small></div>
+        <div class="exam-divider"></div>
+        <div><span class="exam-label">CBSE BOARDS</span><strong id="boardCountdown">Set a date</strong><small id="boardDateLabel">15 February 2027</small></div>
+        <button class="text-button" data-open="settings">Edit dates ↗</button>
+      </div>
+      <div class="stats-grid">
+        <article class="stat-card"><span class="stat-title">Syllabus completed</span><div class="stat-number" id="overallPercent">0%</div><div class="progress"><span id="overallProgressBar"></span></div><small id="chapterCountText">0 of 0 chapters completed</small></article>
+        <article class="stat-card"><span class="stat-title">Chapters left</span><div class="stat-number" id="remainingCount">0</div><small>Across all tracked subjects</small></article>
+        <article class="stat-card"><span class="stat-title">Tests attempted</span><div class="stat-number" id="testsAttempted">0</div><small>Practice sessions saved</small></article>
+        <article class="stat-card"><span class="stat-title">Average score</span><div class="stat-number" id="averageScore">—</div><small>Across recorded tests</small></article>
+      </div>
+
+      <div class="section-heading"><div><p class="eyebrow">AT A GLANCE</p><h2>Subject progress</h2></div><button class="button button-outline" data-open="syllabus">All chapters</button></div>
+      <div class="subject-grid" id="subjectOverview"></div>
+
+      <div class="dashboard-bottom">
+        <section class="panel">
+          <div class="section-heading compact"><div><p class="eyebrow">TODAY</p><h2>Study checklist</h2></div><button class="button button-small" data-open="planner">Manage</button></div>
+          <div id="dashboardTasks" class="task-list"></div>
+          <p class="muted small-text" id="taskProgressText">Add a task to get started.</p>
+        </section>
+        <section class="panel">
+          <div class="section-heading compact"><div><p class="eyebrow">QUICK ACCESS</p><h2>Pick up where you left off</h2></div></div>
+          <div class="quick-links">
+            <button data-open="planner"><span>☷</span><b>Plan my day</b><small>Organise study tasks</small></button>
+            <button data-open="notes"><span>▤</span><b>Open notes</b><small>Save chapter notes</small></button>
+            <button data-open="practice"><span>✓</span><b>Practice questions</b><small>Try a quick quiz</small></button>
+            <button data-open="progress"><span>↗</span><b>View progress</b><small>Review your results</small></button>
+          </div>
+        </section>
+      </div>
+      <p class="disclaimer">Chapter lists are a planning aid. Confirm examinable topics and deletions against the official CBSE 2026–27 curriculum and your school instructions.</p>
+    </section>
+
+    <section class="page" id="page-planner">
+      <div class="page-heading"><p class="eyebrow">MAKE TIME FOR WHAT MATTERS</p><h1>Study planner</h1><p class="muted">Add tasks, tick them off, and build a realistic daily routine.</p></div>
+      <section class="panel">
+        <h2 class="panel-title">Add a study task</h2>
+        <form id="taskForm" class="form-grid">
+          <label class="wide-field">Task name<input id="taskName" required maxlength="140" placeholder="e.g. Revise Carbon and its Compounds"></label>
+          <label>Subject<select id="taskSubject"></select></label>
+          <label>Study date<input id="taskDate" type="date" required></label>
+          <label>Estimated time<select id="taskDuration"><option value="20">20 minutes</option><option value="30">30 minutes</option><option value="45" selected>45 minutes</option><option value="60">1 hour</option><option value="90">1.5 hours</option><option value="120">2 hours</option></select></label>
+          <div class="form-actions"><button class="button button-primary" type="submit">Add task</button><button class="button button-outline" type="button" id="suggestTasks">Suggest unfinished chapters</button></div>
+        </form>
+      </section>
+      <section class="panel section-gap"><div class="section-heading compact"><div><h2>Your tasks</h2><p class="muted small-text">Tasks are stored in this browser.</p></div><select id="taskFilter" class="select-small"><option value="all">All tasks</option><option value="today">Today</option><option value="open">Not completed</option><option value="done">Completed</option></select></div><div id="plannerTasks" class="task-list"></div></section>
+    </section>
+
+    <section class="page" id="page-syllabus">
+      <div class="page-heading"><p class="eyebrow">ONE CHAPTER AT A TIME</p><h1>Syllabus tracker</h1><p class="muted">Mark chapters as completed to update your overall progress.</p></div>
+      <div class="filter-row"><label class="search-wrap"><span>⌕</span><input id="chapterSearch" type="search" placeholder="Find a chapter"></label><select id="subjectFilter"></select><select id="statusFilter"><option value="all">All statuses</option><option value="todo">To do</option><option value="done">Completed</option></select></div>
+      <div class="panel"><div class="section-heading compact"><div><h2 id="syllabusHeading">All subjects</h2><p class="muted small-text" id="syllabusCount"></p></div><button class="button button-outline button-small" id="markVisible">Mark visible complete</button></div><div id="chapterList" class="chapter-list"></div></div>
+    </section>
+
+    <section class="page" id="page-notes">
+      <div class="page-heading"><p class="eyebrow">YOUR PERSONAL REFERENCE</p><h1>Notes library</h1><p class="muted">Keep summaries, formulas, definitions and mistakes in one place.</p></div>
+      <div class="notes-layout">
+        <section class="panel">
+          <label class="form-label">Subject<select id="notesSubject"></select></label>
+          <label class="form-label">Chapter<select id="notesChapter"></select></label>
+          <label class="form-label">Your notes<textarea id="notesEditor" rows="14" placeholder="Write your notes here. Changes are saved when you press Save notes."></textarea></label>
+          <div class="form-actions"><button class="button button-primary" id="saveNotes">Save notes</button><button class="button button-outline" id="insertNotesTemplate">Insert revision template</button></div>
+          <p class="small-text muted" id="notesStatus">Notes are saved locally in your browser.</p>
+        </section>
+        <aside class="panel note-guide"><h2>Simple revision template</h2><ol><li><b>Main idea</b><br><span class="muted">Explain the concept in your own words.</span></li><li><b>Key facts and formulas</b><br><span class="muted">Keep essentials easy to scan.</span></li><li><b>Examples and diagrams</b><br><span class="muted">Add one useful example.</span></li><li><b>Mistakes to avoid</b><br><span class="muted">Record errors from practice.</span></li><li><b>Revise again</b><br><span class="muted">Write the next revision date.</span></li></ol></aside>
+      </div>
+    </section>
+
+    <section class="page" id="page-practice">
+      <div class="page-heading"><p class="eyebrow">PRACTICE MAKES PROGRESS</p><h1>Practice & tests</h1><p class="muted">Use the starter quizzes for quick revision, or record a score from a test you completed offline.</p></div>
+      <div class="quiz-options">
+        <article class="panel"><span class="option-icon">01</span><h2>Daily practice</h2><p class="muted">A short mixed set for a daily check-in.</p><button class="button button-primary" data-quiz="daily">Start practice</button></article>
+        <article class="panel"><span class="option-icon">02</span><h2>Maths & Science</h2><p class="muted">Starter questions from core concepts.</p><button class="button button-primary" data-quiz="stem">Start practice</button></article>
+        <article class="panel"><span class="option-icon">03</span><h2>AI & English</h2><p class="muted">Check basic concepts and terminology.</p><button class="button button-primary" data-quiz="aiEnglish">Start practice</button></article>
+      </div>
+      <section class="panel section-gap"><div class="section-heading compact"><div><h2 id="quizTitle">Your quiz</h2><p class="muted small-text" id="quizSubtitle">Choose a practice set above.</p></div></div><div id="quizArea" class="muted">Questions and feedback will appear here.</div></section>
+      <section class="panel section-gap"><h2>Record an external test</h2><form id="recordTestForm" class="form-grid"><label>Test name<input id="recordName" required placeholder="e.g. School Science test"></label><label>Test date<input id="recordDate" type="date" required></label><label>Marks obtained<input id="recordScore" type="number" min="0" step="0.5" required></label><label>Total marks<input id="recordTotal" type="number" min="1" step="0.5" value="80" required></label><div class="form-actions"><button class="button button-primary" type="submit">Save test result</button></div></form></section>
+    </section>
+
+    <section class="page" id="page-progress">
+      <div class="page-heading"><p class="eyebrow">LOOK BACK TO MOVE FORWARD</p><h1>Progress report</h1><p class="muted">Review chapter completion and recorded test performance.</p></div>
+      <div class="stats-grid three-stats"><article class="stat-card"><span class="stat-title">Tests recorded</span><div class="stat-number" id="progressTestCount">0</div></article><article class="stat-card"><span class="stat-title">Average percentage</span><div class="stat-number" id="progressAverage">—</div></article><article class="stat-card"><span class="stat-title">Best result</span><div class="stat-number" id="progressBest">—</div></article></div>
+      <section class="panel section-gap"><h2>Subject completion</h2><div id="subjectProgressRows"></div></section>
+      <section class="panel section-gap"><div class="section-heading compact"><h2>Test history</h2><button class="button button-outline button-small" id="clearTestHistory">Clear history</button></div><div id="testHistory"></div></section>
+    </section>
+
+    <section class="page" id="page-settings">
+      <div class="page-heading"><p class="eyebrow">MAKE STUDYHUB YOURS</p><h1>Settings</h1><p class="muted">Set your exam dates and choose how the site looks.</p></div>
+      <section class="panel settings-panel">
+        <form id="settingsForm">
+          <label class="form-label">Pre-Board date<input id="preboardDate" type="date"></label>
+          <label class="form-label">CBSE Board exam target date<input id="boardDate" type="date"></label>
+          <label class="form-label">Daily study target<select id="dailyTarget"><option value="2">2 hours</option><option value="3">3 hours</option><option value="4">4 hours</option><option value="5">5 hours</option><option value="6">6 hours</option><option value="7">7 hours</option></select></label>
+          <label class="form-label">Appearance<select id="themeSelect"><option value="light">Light</option><option value="dark">Dark</option></select></label>
+          <div class="form-actions"><button class="button button-primary" type="submit">Save settings</button><button class="button button-outline" type="button" id="resetChapters">Reset chapter checkmarks</button></div>
+        </form>
+        <div class="info-box"><b>About your data</b><p>Your notes, tasks and progress stay in this browser on this device. Use Export backup before clearing browser data. Cloud sync and AI-generated notes are not included in this local version.</p></div>
+        <p class="muted small-text">Check the <a href="https://cbseacademic.nic.in/curriculum_2027.html" target="_blank" rel="noopener">official CBSE 2026–27 curriculum</a> and your school's instructions for the final examinable syllabus.</p>
+      </section>
+    </section>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
