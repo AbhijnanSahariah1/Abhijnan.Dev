@@ -44,12 +44,13 @@ const SUBJECTS = {
 };
 
 const DEFAULT_STATE = {
-  version: 1,
+  version: 2,
   completed: {},
   tasks: [],
   notes: {},
   tests: [],
-  settings: { theme:"light", preboardDate:"2026-11-16", boardDate:"2027-02-15", dailyTarget:"5", studentName:"Abhijnan", assistantStyle:"gentle" }
+  examScores: { preboard:{}, board:{} },
+  settings: { theme:"dark", preboardDate:"2026-11-16", boardDate:"2027-02-15", dailyTarget:"5", studentName:"Abhijnan", assistantStyle:"gentle" }
 };
 const STORE_KEY = "studyhub-minimal-v1";
 let state = loadState();
@@ -64,7 +65,8 @@ function loadState() {
     if (saved && typeof saved === "object") {
       return {
         ...structuredCloneSafe(DEFAULT_STATE), ...saved,
-        settings: {...DEFAULT_STATE.settings, ...(saved.settings || {})},
+        settings: normalizeSettings({...DEFAULT_STATE.settings, ...(saved.settings || {})}),
+        examScores: normalizeExamScores(saved.examScores),
         completed: saved.completed && typeof saved.completed === "object" ? saved.completed : {},
         tasks: Array.isArray(saved.tasks) ? saved.tasks : [],
         notes: saved.notes && typeof saved.notes === "object" ? saved.notes : {},
@@ -75,6 +77,16 @@ function loadState() {
     console.warn("Could not read saved StudyHub data. Starting with defaults.", error);
   }
   return structuredCloneSafe(DEFAULT_STATE);
+}
+function normalizeSettings(settings) {
+  const normalized = {...DEFAULT_STATE.settings, ...(settings || {})};
+  if (normalized.theme === "light") normalized.theme = "dark";
+  if (!["dark","midnight"].includes(normalized.theme)) normalized.theme = "dark";
+  return normalized;
+}
+function normalizeExamScores(scores) {
+  const safe = value => value && typeof value === "object" && !Array.isArray(value) ? value : {};
+  return {preboard:safe(scores?.preboard), board:safe(scores?.board)};
 }
 function structuredCloneSafe(value) { return JSON.parse(JSON.stringify(value)); }
 function persist(message) {
@@ -163,6 +175,7 @@ function renderAll() {
   renderChapters();
   renderNotesSelectors();
   renderProgress();
+  renderExamScores();
 }
 function safeRenderAll() {
   try {
@@ -185,6 +198,8 @@ function renderDashboard() {
   $("preboardDateLabel").textContent = state.settings.preboardDate ? dateLabel(state.settings.preboardDate) : "Set a date in Settings";
   $("boardCountdown").textContent = countdown(state.settings.boardDate);
   $("boardDateLabel").textContent = state.settings.boardDate ? dateLabel(state.settings.boardDate) : "Set a date in Settings";
+  $("preboardOverallPercent").textContent = formatExamPercent(examStats("preboard").percent);
+  $("boardOverallPercent").textContent = formatExamPercent(examStats("board").percent);
   const stats = overallStats();
   $("overallPercent").textContent = `${stats.percent}%`;
   $("overallProgressBar").style.width = `${stats.percent}%`;
@@ -393,6 +408,14 @@ function init() {
     if (subjectButton) { $("subjectFilter").value = subjectButton.dataset.subjectOpen; openPage("syllabus"); return; }
     const quizButton = event.target.closest("[data-quiz]");
     if (quizButton) { startQuiz(quizButton.dataset.quiz); return; }
+    const noteChoice = event.target.closest("[data-note-subject][data-note-chapter]");
+    if (noteChoice) {
+      $("guideSubject").value = noteChoice.dataset.noteSubject;
+      fillGuideChapters(noteChoice.dataset.noteChapter);
+      $("noteChapterResults").querySelectorAll(".note-chapter-result").forEach(button => button.classList.toggle("active", button === noteChoice));
+      $("guideContent").scrollIntoView({behavior:"smooth",block:"start"});
+      return;
+    }
     const deleteButton = event.target.closest("[data-task-delete]");
     if (deleteButton) {
       state.tasks = state.tasks.filter(task => task.id !== deleteButton.dataset.taskDelete);
@@ -423,8 +446,8 @@ function init() {
     if (event.key === "Escape") closeNavigation();
   });
   $("themeToggle").addEventListener("click", () => {
-    state.settings.theme = state.settings.theme === "dark" ? "light" : "dark";
-    persist("Theme updated.");
+    state.settings.theme = state.settings.theme === "dark" ? "midnight" : "dark";
+    persist(state.settings.theme === "dark" ? "Pure black theme enabled." : "Soft charcoal theme enabled.");
   });
   $("themeSelect").addEventListener("change", () => {
     state.settings.theme = $("themeSelect").value;
@@ -476,6 +499,13 @@ function init() {
   $("insertNotesTemplate").addEventListener("click", () => {
     if ($("notesEditor").value.trim() && !confirm("Replace the current editor text with the template? Save your existing note first if needed.")) return;
     $("notesEditor").value = "MAIN IDEA\n\nKEY FACTS / FORMULAS\n\nEXAMPLES / DIAGRAMS\n\nMISTAKES TO AVOID\n\nQUESTIONS TO REVISE\n";
+  });
+  $("preboardScoreForm").addEventListener("submit", event => saveExamScores(event, "preboard"));
+  $("boardScoreForm").addEventListener("submit", event => saveExamScores(event, "board"));
+  document.addEventListener("input", event => {
+    const scoreInput = event.target.closest("[data-score-kind]");
+    if (scoreInput) updateExamScorePreview(scoreInput.dataset.scoreKind);
+    if (event.target.id === "noteSearch") renderNoteChapterResults(event.target.value);
   });
   $("recordTestForm").addEventListener("submit", event => {
     event.preventDefault();
