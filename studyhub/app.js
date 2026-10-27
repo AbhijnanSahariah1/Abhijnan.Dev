@@ -394,6 +394,8 @@ function renderExamScores() {
     const container = $(`${kind}ScoreFields`);
     if (!container) return;
     const records = state.examScores?.[kind] || {};
+    const targetInput = container.parentElement.querySelector("[data-score-target]");
+    if (targetInput) targetInput.value = String(state.examTargets?.[kind] ?? (kind === "preboard" ? 90 : 95));
     container.innerHTML = subjectNames.map(subject => {
       const entry = records[subject] || {};
       const obtained = entry.obtained ?? "";
@@ -703,6 +705,56 @@ function visualStepsFor(subject, chapter) {
 }
 function conceptDiagramMarkup(subject, chapter) {
   const steps = visualStepsFor(subject, chapter);
+  const key = `${subject} ${chapter}`.toLowerCase();
+  if (subject === "Mathematics" && /trigonometry/.test(key)) {
+    return `<figure class="concept-visual specific-diagram">
+      <svg viewBox="0 0 760 235" role="img" aria-label="Right triangle showing trigonometric sides" xmlns="http://www.w3.org/2000/svg">
+        <path d="M95 190 L95 45 L335 190 Z" fill="#0c1a22" stroke="#67e4d0" stroke-width="2.5"/>
+        <path d="M95 166 H119 V190" fill="none" stroke="#aeb9cb" stroke-width="1.6"/>
+        <text x="78" y="207" fill="#eef5fc" font-size="13">A</text><text x="78" y="36" fill="#eef5fc" font-size="13">B</text><text x="340" y="205" fill="#eef5fc" font-size="13">C</text>
+        <text x="110" y="114" fill="#b9c6d6" font-size="12" transform="rotate(-90 110 114)">Opposite</text>
+        <text x="193" y="211" fill="#b9c6d6" font-size="12">Adjacent</text><text x="224" y="103" fill="#b9c6d6" font-size="12" transform="rotate(31 224 103)">Hypotenuse</text>
+        <path d="M302 190 A33 33 0 0 0 309 171" fill="none" stroke="#a78bfa" stroke-width="2"/>
+        <text x="284" y="172" fill="#c6b8ff" font-size="14" font-weight="700">θ</text>
+        <line x1="390" y1="38" x2="390" y2="205" stroke="#263644"/>
+        <text x="420" y="62" fill="#67e4d0" font-size="11" font-weight="800" letter-spacing="1">RATIOS</text>
+        <text x="420" y="100" fill="#f3f6fc" font-size="17" font-weight="700">sin θ = opposite / hypotenuse</text>
+        <text x="420" y="137" fill="#f3f6fc" font-size="17" font-weight="700">cos θ = adjacent / hypotenuse</text>
+        <text x="420" y="174" fill="#f3f6fc" font-size="17" font-weight="700">tan θ = opposite / adjacent</text>
+        <text x="420" y="205" fill="#9ca9ba" font-size="11">SOH · CAH · TOA</text>
+      </svg><figcaption>Right-triangle schematic. Identify the chosen angle first, then label opposite, adjacent and hypotenuse before selecting a ratio.</figcaption>
+    </figure>`;
+  }
+  if (subject === "Science" && /electricity/.test(key)) {
+    return `<figure class="concept-visual specific-diagram">
+      <svg viewBox="0 0 760 230" role="img" aria-label="Simplified closed circuit with a cell, resistor and bulb" xmlns="http://www.w3.org/2000/svg">
+        <path d="M112 80 H262 M360 80 H625 V100 M625 151 V176 H112 V136 M112 108 V80" stroke="#67e4d0" stroke-width="2.3" fill="none" stroke-linecap="round"/>
+        <rect x="262" y="64" width="98" height="32" rx="4" fill="#111922" stroke="#a78bfa" stroke-width="2"/>
+        <path d="M278 80 l8 -8 l8 16 l8 -16 l8 16 l8 -16 l8 8" fill="none" stroke="#c6b8ff" stroke-width="1.8"/>
+        <circle cx="625" cy="126" r="25" fill="#111922" stroke="#a78bfa" stroke-width="2"/>
+        <path d="M610 111 L640 141 M640 111 L610 141" stroke="#c6b8ff" stroke-width="2"/>
+        <path d="M100 110 H124 M105 126 H119" stroke="#f1c27a" stroke-width="3" stroke-linecap="round"/>
+        <path d="M180 72 l12 8 l-12 8 M420 72 l12 8 l-12 8 M492 168 l12 8 l-12 8" fill="none" stroke="#67e4d0" stroke-width="1.8"/>
+        <text x="80" y="100" fill="#f1c27a" font-size="11" text-anchor="middle">Cell</text>
+        <text x="310" y="51" fill="#c6b8ff" font-size="12" text-anchor="middle">Resistor</text>
+        <text x="625" y="72" fill="#c6b8ff" font-size="12" text-anchor="middle">Bulb / load</text>
+        <text x="300" y="218" fill="#9ca9ba" font-size="11" text-anchor="middle">A closed conducting path lets current flow</text>
+      </svg><figcaption>Original circuit schematic for revision. For numerical questions, note the circuit connections first; use V = IR only where the question conditions allow it.</figcaption>
+    </figure>`;
+  }
+  if (subject === "Science" && /environment/.test(key)) {
+    return `<figure class="concept-visual specific-diagram">
+      <svg viewBox="0 0 760 175" role="img" aria-label="Food chain and nutrient recycling schematic" xmlns="http://www.w3.org/2000/svg">
+        <defs><marker id="foodArrow" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#67e4d0"/></marker></defs>
+        <text x="22" y="22" fill="#67e4d0" font-size="10" font-weight="800" letter-spacing="1.5">ENERGY FLOW</text>
+        <g fill="#101821" stroke="#2c3b4e" stroke-width="1.3"><rect x="22" y="45" width="135" height="67" rx="9"/><rect x="212" y="45" width="135" height="67" rx="9"/><rect x="402" y="45" width="135" height="67" rx="9"/><rect x="592" y="45" width="145" height="67" rx="9"/></g>
+        <g fill="#f4f7fb" font-size="13" font-weight="700" text-anchor="middle"><text x="89" y="75">Sunlight</text><text x="279" y="75">Producer</text><text x="469" y="75">Consumer</text><text x="664" y="75">Decomposer</text></g>
+        <g fill="#a1adbd" font-size="10" text-anchor="middle"><text x="89" y="94">Energy source</text><text x="279" y="94">Green plants</text><text x="469" y="94">Food transfer</text><text x="664" y="94">Recycles nutrients</text></g>
+        <g stroke="#67e4d0" stroke-width="1.6" fill="none" marker-end="url(#foodArrow)"><path d="M158 79 H202"/><path d="M348 79 H392"/><path d="M538 79 H582"/></g>
+        <text x="380" y="147" fill="#9ca9ba" font-size="11" text-anchor="middle">Energy moves through trophic levels; nutrients are recycled.</text>
+      </svg><figcaption>Food-chain schematic. Energy flows in one direction through trophic levels, while decomposers help return nutrients to the environment.</figcaption>
+    </figure>`;
+  }
   const boxes = steps.map((step,index) => {
     const x = 18 + index * 185;
     return `<g>
