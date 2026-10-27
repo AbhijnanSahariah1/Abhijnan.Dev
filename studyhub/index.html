@@ -56,6 +56,27 @@
       <div class="section-heading"><div><p class="eyebrow">AT A GLANCE</p><h2>Subject progress</h2></div><button class="button button-outline" data-open="syllabus">All chapters</button></div>
       <div class="subject-grid" id="subjectOverview"></div>
 
+      <div class="personal-study-row">
+        <section class="panel week-panel">
+          <div class="section-heading compact"><div><p class="eyebrow">YOUR RHYTHM</p><h2>This week</h2></div><span class="muted small-text" id="weekTotal">0 minutes studied</span></div>
+          <div class="week-bars" id="weekBars" aria-label="Weekly completed study time"></div>
+          <p class="muted small-text">Bars use estimated minutes from tasks you complete in the planner.</p>
+        </section>
+        <section class="panel assistant-panel">
+          <div class="assistant-top"><span class="assistant-stamp">SH</span><div><p class="eyebrow">YOUR STUDY COMPANION</p><h2 id="assistantHeading">A little help for today</h2></div></div>
+          <p class="muted assistant-intro">A small nudge based on your chapter progress and today's plan. No pressure, just the next useful step.</p>
+          <label class="form-label assistant-label">What do you need help with?
+            <select id="assistantIntent">
+              <option value="next">What should I study next?</option>
+              <option value="revise">Help me plan revision</option>
+              <option value="weak">Find chapters I have not finished</option>
+              <option value="motivate">I feel behind. Help me start.</option>
+            </select>
+          </label>
+          <button class="button button-primary" id="askCompanion">Suggest my next step</button>
+          <div id="assistantReply" class="assistant-reply" aria-live="polite">Choose an option and I’ll suggest a practical next step from your saved study data.</div>
+        </section>
+      </div>
       <div class="dashboard-bottom">
         <section class="panel">
           <div class="section-heading compact"><div><p class="eyebrow">TODAY</p><h2>Study checklist</h2></div><button class="button button-small" data-open="planner">Manage</button></div>
@@ -150,9 +171,11 @@
       <div class="page-heading"><p class="eyebrow">MAKE STUDYHUB YOURS</p><h1>Settings</h1><p class="muted">Set your exam dates and choose how the site looks.</p></div>
       <section class="panel settings-panel">
         <form id="settingsForm">
+          <label class="form-label">Your name<input id="studentName" type="text" maxlength="40" placeholder="Enter your name"></label>
           <label class="form-label">Pre-Board date<input id="preboardDate" type="date"></label>
           <label class="form-label">CBSE Board exam target date<input id="boardDate" type="date"></label>
           <label class="form-label">Daily study target<select id="dailyTarget"><option value="2">2 hours</option><option value="3">3 hours</option><option value="4">4 hours</option><option value="5">5 hours</option><option value="6">6 hours</option><option value="7">7 hours</option></select></label>
+          <label class="form-label">Your study companion<select id="assistantStyle"><option value="gentle">Gentle and encouraging</option><option value="direct">Short and direct</option></select></label>
           <label class="form-label">Appearance<select id="themeSelect"><option value="light">Light</option><option value="dark">Dark</option></select></label>
           <div class="form-actions"><button class="button button-primary" type="submit">Save settings</button><button class="button button-outline" type="button" id="resetChapters">Reset chapter checkmarks</button></div>
         </form>
