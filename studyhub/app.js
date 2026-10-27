@@ -136,10 +136,16 @@ function fillSubjectSelect(select, includeAll = false) {
   select.innerHTML = (includeAll ? '<option value="all">All subjects</option>' : "") +
     subjectNames.map(subject => `<option value="${escapeHTML(subject)}">${escapeHTML(subject)}</option>`).join("");
 }
+function closeNavigation() {
+  $("sidebar").classList.remove("open");
+  $("sidebarScrim")?.classList.remove("open");
+  $("mobileMenu").setAttribute("aria-expanded", "false");
+  $("mobileMenu").setAttribute("aria-label", "Open navigation");
+}
 function openPage(name) {
   document.querySelectorAll(".page").forEach(page => page.classList.toggle("active", page.id === `page-${name}`));
   document.querySelectorAll(".nav-link").forEach(button => button.classList.toggle("active", button.dataset.page === name));
-  $("sidebar").classList.remove("open");
+  closeNavigation();
   if (name === "syllabus") renderChapters();
   if (name === "notes") loadSelectedNote();
   window.scrollTo({top:0, behavior:"smooth"});
@@ -406,7 +412,16 @@ function init() {
       persist(chapter.checked ? "Chapter marked complete." : "Chapter marked as not complete.");
     }
   });
-  $("mobileMenu").addEventListener("click", () => $("sidebar").classList.toggle("open"));
+  $("mobileMenu").addEventListener("click", () => {
+    const isOpen = $("sidebar").classList.toggle("open");
+    $("sidebarScrim")?.classList.toggle("open", isOpen);
+    $("mobileMenu").setAttribute("aria-expanded", String(isOpen));
+    $("mobileMenu").setAttribute("aria-label", isOpen ? "Close navigation" : "Open navigation");
+  });
+  $("sidebarScrim")?.addEventListener("click", closeNavigation);
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") closeNavigation();
+  });
   $("themeToggle").addEventListener("click", () => {
     state.settings.theme = state.settings.theme === "dark" ? "light" : "dark";
     persist("Theme updated.");
