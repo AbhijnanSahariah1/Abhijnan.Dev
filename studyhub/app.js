@@ -50,6 +50,7 @@ const DEFAULT_STATE = {
   notes: {},
   tests: [],
   examScores: { preboard:{}, board:{} },
+  examTargets: {preboard:90, board:95},
   settings: { theme:"dark", preboardDate:"2026-11-16", boardDate:"2027-02-15", dailyTarget:"5", studentName:"Abhijnan", assistantStyle:"gentle" }
 };
 const STORE_KEY = "studyhub-minimal-v1";
@@ -67,6 +68,7 @@ function loadState() {
         ...structuredCloneSafe(DEFAULT_STATE), ...saved,
         settings: normalizeSettings({...DEFAULT_STATE.settings, ...(saved.settings || {})}),
         examScores: normalizeExamScores(saved.examScores),
+        examTargets: normalizeExamTargets(saved.examTargets),
         completed: saved.completed && typeof saved.completed === "object" ? saved.completed : {},
         tasks: Array.isArray(saved.tasks) ? saved.tasks : [],
         notes: saved.notes && typeof saved.notes === "object" ? saved.notes : {},
@@ -87,6 +89,13 @@ function normalizeSettings(settings) {
 function normalizeExamScores(scores) {
   const safe = value => value && typeof value === "object" && !Array.isArray(value) ? value : {};
   return {preboard:safe(scores?.preboard), board:safe(scores?.board)};
+}
+function normalizeExamTargets(targets) {
+  const read = (key, fallback) => {
+    const value = Number(targets?.[key]);
+    return Number.isFinite(value) && value >= 0 && value <= 100 ? value : fallback;
+  };
+  return {preboard:read("preboard",90), board:read("board",95)};
 }
 function structuredCloneSafe(value) { return JSON.parse(JSON.stringify(value)); }
 function persist(message) {
@@ -200,6 +209,8 @@ function renderDashboard() {
   $("boardDateLabel").textContent = state.settings.boardDate ? dateLabel(state.settings.boardDate) : "Set a date in Settings";
   $("preboardOverallPercent").textContent = formatExamPercent(examStats("preboard").percent);
   $("boardOverallPercent").textContent = formatExamPercent(examStats("board").percent);
+  $("preboardTargetLabel").textContent = `Target ${formatExamPercent(state.examTargets.preboard)}`;
+  $("boardTargetLabel").textContent = `Target ${formatExamPercent(state.examTargets.board)}`;
   const stats = overallStats();
   $("overallPercent").textContent = `${stats.percent}%`;
   $("overallProgressBar").style.width = `${stats.percent}%`;
@@ -366,7 +377,11 @@ function collectExamScoresFromForm(kind) {
 }
 function paintExamScore(kind, stats) {
   const prefix = kind === "preboard" ? "preboard" : "board";
+  const target = Number(state.examTargets?.[kind] ?? (kind === "preboard" ? 90 : 95));
   $(`${prefix}ScorePercent`).textContent = formatExamPercent(stats.percent);
+  $(`${prefix}ScoreTargetHint`).textContent = stats.percent === null
+    ? `Target goal: ${formatExamPercent(target)}`
+    : stats.percent >= target ? `Target ${formatExamPercent(target)} · goal reached` : `Target ${formatExamPercent(target)} · ${(target-stats.percent).toFixed(1)} points to go`;
   $(`${prefix}ScoreSummary`).textContent = stats.count
     ? `${stats.count} of ${subjectNames.length} subjects · ${stats.obtained} / ${stats.total} marks`
     : "No subject marks entered yet.";
@@ -396,6 +411,12 @@ function renderExamScores() {
 function saveExamScores(event, kind) {
   event.preventDefault();
   const records = collectExamScoresFromForm(kind);
+  const form = $(kind === "preboard" ? "preboardScoreForm" : "boardScoreForm");
+  const target = Number(form.querySelector("[data-score-target]").value);
+  if (!Number.isFinite(target) || target < 0 || target > 100) {
+    toast("Target percentage must be between 0 and 100.");
+    return;
+  }
   let entered = 0;
   for (const [subject, entry] of Object.entries(records)) {
     if (entry.obtained === "") continue;
@@ -406,10 +427,7 @@ function saveExamScores(event, kind) {
     }
     entered++;
   }
-  if (!entered) {
-    toast("Enter marks for at least one subject before saving.");
-    return;
-  }
+  state.examTargets[kind] = target;
   state.examScores[kind] = records;
   persist(kind === "preboard" ? "Pre-board marks saved." : "Board marks saved.");
 }
@@ -580,6 +598,11 @@ function init() {
   });
   $("preboardScoreForm").addEventListener("submit", event => saveExamScores(event, "preboard"));
   $("boardScoreForm").addEventListener("submit", event => saveExamScores(event, "board"));
+  document.querySelectorAll("[data-score-target]").forEach(input => input.addEventListener("input", () => {
+    const kind = input.dataset.scoreTarget;
+    const value = Number(input.value);
+    $(`${kind}ScoreTargetHint`).textContent = input.value !== "" && Number.isFinite(value) && value >= 0 && value <= 100 ? `Target goal: ${formatExamPercent(value)}` : "Enter a target from 0% to 100%.";
+  }));
   document.addEventListener("input", event => {
     const scoreInput = event.target.closest("[data-score-kind]");
     if (scoreInput) updateExamScorePreview(scoreInput.dataset.scoreKind);
