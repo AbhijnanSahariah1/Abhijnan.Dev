@@ -80,7 +80,7 @@ function structuredCloneSafe(value) { return JSON.parse(JSON.stringify(value)); 
 function persist(message) {
   try {
     localStorage.setItem(STORE_KEY, JSON.stringify(state));
-    renderAll();
+    safeRenderAll();
     if (message) toast(message);
   } catch (error) {
     toast("Could not save. Export your data and check browser storage.");
@@ -158,6 +158,17 @@ function renderAll() {
   renderNotesSelectors();
   renderProgress();
 }
+function safeRenderAll() {
+  try {
+    renderAll();
+    return true;
+  } catch (error) {
+    console.error("StudyHub could not refresh one of its views.", error);
+    toast("A view could not refresh. Your button controls are still active; try refreshing the page.");
+    return false;
+  }
+}
+
 function renderDashboard() {
   const now = new Date();
   const displayName = (state.settings.studentName || "").trim() || "Student";
@@ -367,7 +378,6 @@ function init() {
   fillSubjectSelect($("subjectFilter"), true);
   $("taskDate").value = todayISO();
   $("recordDate").value = todayISO();
-  renderAll();
   document.addEventListener("click", event => {
     const pageButton = event.target.closest("[data-page]");
     if (pageButton) { event.preventDefault(); openPage(pageButton.dataset.page); return; }
@@ -468,6 +478,8 @@ function init() {
   });
   $("exportData").addEventListener("click", exportBackup);
   $("askCompanion").addEventListener("click", answerCompanion);
+  // Wire controls before the first render so a display bug cannot disable every button.
+  safeRenderAll();
 }
 init();
 
@@ -539,7 +551,7 @@ function initPreparedNotes() {
     link.href = url;
     link.download = `StudyHub-${$("guideSubject").value.replace(/[^a-z0-9]+/gi,"-")}-notes.txt`;
     link.click();
-    URL.revokeObjectURL(url);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
     toast("Chapter notes downloaded.");
   });
   $("scheduleGuideRevision").addEventListener("click", () => {
