@@ -38,7 +38,7 @@
     <section class="page active" id="page-dashboard">
       <div class="welcome-row">
         <div><p class="eyebrow">YOUR STUDY SPACE</p><h1 id="greeting">Welcome back, Student.</h1><p class="muted">Keep it simple. Show up every day.</p></div>
-        <div class="date-label" id="todayLabel"></div>
+        <div class="welcome-actions"><button class="button button-outline button-small" data-open="settings">Edit profile & dates ↗</button><div class="date-label" id="todayLabel"></div></div>
       </div>
       <div class="exam-strip">
         <div><span class="exam-label">PRE-BOARDS</span><strong id="preboardCountdown">Set a date</strong><small id="preboardDateLabel">Add your exam date in settings</small></div>
@@ -171,7 +171,7 @@
       <div class="page-heading"><p class="eyebrow">MAKE STUDYHUB YOURS</p><h1>Settings</h1><p class="muted">Set your exam dates and choose how the site looks.</p></div>
       <section class="panel settings-panel">
         <form id="settingsForm">
-          <label class="form-label">Your name<input id="studentName" type="text" maxlength="40" placeholder="Enter your name"></label>
+          <label class="form-label">Your name<input id="studentName" type="text" maxlength="40" autocomplete="name" placeholder="Enter your name"></label>
           <label class="form-label">Pre-Board date<input id="preboardDate" type="date"></label>
           <label class="form-label">CBSE Board exam target date<input id="boardDate" type="date"></label>
           <label class="form-label">Daily study target<select id="dailyTarget"><option value="2">2 hours</option><option value="3">3 hours</option><option value="4">4 hours</option><option value="5">5 hours</option><option value="6">6 hours</option><option value="7">7 hours</option></select></label>
