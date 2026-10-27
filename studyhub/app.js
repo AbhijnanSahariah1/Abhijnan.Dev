@@ -49,7 +49,7 @@ const DEFAULT_STATE = {
   tasks: [],
   notes: {},
   tests: [],
-  settings: { theme:"light", preboardDate:"2026-11-16", boardDate:"2027-02-15", dailyTarget:"5" }
+  settings: { theme:"light", preboardDate:"2026-11-16", boardDate:"2027-02-15", dailyTarget:"5", studentName:"Abhijnan", assistantStyle:"gentle" }
 };
 const STORE_KEY = "studyhub-minimal-v1";
 let state = loadState();
@@ -141,6 +141,8 @@ function openPage(name) {
 function renderAll() {
   document.documentElement.dataset.theme = state.settings.theme;
   $("themeSelect").value = state.settings.theme;
+  if ($("studentName")) $("studentName").value = state.settings.studentName || "";
+  if ($("assistantStyle")) $("assistantStyle").value = state.settings.assistantStyle || "gentle";
   $("preboardDate").value = state.settings.preboardDate || "";
   $("boardDate").value = state.settings.boardDate || "";
   $("dailyTarget").value = state.settings.dailyTarget || "5";
@@ -152,6 +154,9 @@ function renderAll() {
 }
 function renderDashboard() {
   const now = new Date();
+  const displayName = (state.settings.studentName || "").trim() || "Student";
+  $("greeting").textContent = `Welcome back, ${displayName}.`;
+  $("assistantHeading").textContent = `${displayName}’s study companion`;
   $("todayLabel").textContent = now.toLocaleDateString(undefined, {weekday:"long", month:"long", day:"numeric"});
   $("preboardCountdown").textContent = countdown(state.settings.preboardDate);
   $("preboardDateLabel").textContent = state.settings.preboardDate ? dateLabel(state.settings.preboardDate) : "Set a date in Settings";
@@ -173,10 +178,71 @@ function renderDashboard() {
   $("taskProgressText").textContent = todays.length ? `${complete} of ${todays.length} tasks completed today.` : "No tasks planned for today yet.";
   const preview = todays.slice(0,4);
   $("dashboardTasks").innerHTML = preview.length ? preview.map(taskRowHTML).join("") : '<div class="empty-state">No tasks for today. Add a few manageable tasks in your planner.</div>';
+  renderWeekBars();
 }
 function taskRowHTML(task) {
   return `<div class="task-row ${task.done ? "completed" : ""}"><input type="checkbox" data-task-check="${escapeHTML(task.id)}" ${task.done ? "checked" : ""} aria-label="Mark task complete"><div class="task-copy"><b>${escapeHTML(task.title)}</b><small>${escapeHTML(task.subject || "General")} · ${escapeHTML(task.duration || 30)} min · ${escapeHTML(task.date || "No date")}</small></div><button class="task-delete" data-task-delete="${escapeHTML(task.id)}" aria-label="Delete task">×</button></div>`;
 }
+
+function renderWeekBars() {
+  const today = new Date();
+  const monday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  monday.setDate(monday.getDate() - ((monday.getDay() + 6) % 7));
+  const days = [];
+  let totalMinutes = 0;
+  for (let i=0;i<7;i++) {
+    const date = new Date(monday);
+    date.setDate(monday.getDate()+i);
+    const iso = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,"0")}-${String(date.getDate()).padStart(2,"0")}`;
+    const minutes = state.tasks.filter(task=>task.done && task.date===iso).reduce((sum,task)=>sum+(Number(task.duration)||0),0);
+    totalMinutes += minutes;
+    days.push({date,iso,minutes});
+  }
+  const maxMinutes = Math.max(45,...days.map(day=>day.minutes));
+  $("weekTotal").textContent = totalMinutes >= 60
+    ? `${Math.floor(totalMinutes/60)}h ${totalMinutes%60 ? totalMinutes%60+"m" : ""} studied`.trim()
+    : `${totalMinutes} minutes studied`;
+  $("weekBars").innerHTML = days.map(day=>{
+    const height = day.minutes ? Math.max(6,Math.round(day.minutes/maxMinutes*100)) : 0;
+    const label = day.date.toLocaleDateString(undefined,{weekday:"short"});
+    return `<div class="week-day ${day.iso===todayISO()?"today":""}" title="${label}: ${day.minutes} minutes">
+      <strong>${day.minutes ? day.minutes+"m" : "·"}</strong>
+      <span class="week-track"><span class="week-fill" style="height:${height}%"></span></span>
+      <small>${label}</small>
+    </div>`;
+  }).join("");
+}
+function answerCompanion() {
+  const name = (state.settings.studentName || "").trim() || "Student";
+  const intent = $("assistantIntent").value;
+  const gentle = (state.settings.assistantStyle || "gentle") === "gentle";
+  const unfinished = allChapters().filter(item=>!state.completed[item.key]);
+  const todayTasks = state.tasks.filter(task=>task.date===todayISO());
+  const pending = todayTasks.filter(task=>!task.done);
+  const completed = todayTasks.filter(task=>task.done);
+  const next = unfinished.find(item=>!pending.some(task=>task.title.includes(item.chapter))) || unfinished[0];
+  let message = "";
+  if (intent === "next") {
+    message = next
+      ? `Your next useful step is ${next.chapter} in ${next.subject}. Spend 25 minutes revising the main ideas, then try 5 questions without looking at your notes.`
+      : "All tracked chapters are marked complete. Pick one topic you find difficult and test your memory with a short question set.";
+    if (pending.length) message += `\n\nYou have ${pending.length} unfinished task${pending.length===1?"":"s"} planned for today. Try completing one before adding another.`;
+  } else if (intent === "revise") {
+    message = "Use a simple 30-minute revision block: 10 minutes to recall key points from memory, 15 minutes of questions, and 5 minutes to correct mistakes.";
+    if (next) message += `\n\nA chapter to use for your next slot: ${next.chapter} (${next.subject}).`;
+  } else if (intent === "weak") {
+    const lowest = subjectNames.map(subject=>({subject,...subjectStats(subject)})).sort((a,b)=>a.percent-b.percent).slice(0,3);
+    message = "Your least-complete subjects right now:\n" + lowest.map(item=>`• ${item.subject}: ${item.percent}% complete, ${item.total-item.done} left`).join("\n");
+    if (next) message += `\n\nStart with ${next.chapter}.`;
+  } else {
+    message = "You do not have to fix the whole syllabus today. Choose one small task, set a 20-minute timer, put your phone aside, and focus only on that task. A small start still counts.";
+    if (next) message += `\n\nAn easy place to begin: ${next.chapter} in ${next.subject}.`;
+  }
+  if (completed.length) message += `\n\nYou have already completed ${completed.length} task${completed.length===1?"":"s"} today. That is progress.`;
+  if (!gentle) message = message.replace("Your next useful step is ","Next: ").replace("Try completing one before adding another.","Finish a pending task before adding more.");
+  $("assistantReply").textContent = `For ${name}:\n${message}`;
+}
+
 function renderTasks() {
   const filter = $("taskFilter").value;
   const today = todayISO();
@@ -338,6 +404,8 @@ function init() {
     state.settings.preboardDate = $("preboardDate").value;
     state.settings.boardDate = $("boardDate").value;
     state.settings.dailyTarget = $("dailyTarget").value;
+    state.settings.studentName = ($("studentName").value.trim() || "Student").slice(0, 40);
+    state.settings.assistantStyle = $("assistantStyle").value;
     state.settings.theme = $("themeSelect").value;
     persist("Settings saved.");
   });
@@ -393,6 +461,7 @@ function init() {
     if (confirm("Clear all chapter completion checkmarks? Notes and tasks will remain.")) { state.completed = {}; persist("Chapter progress reset."); }
   });
   $("exportData").addEventListener("click", exportBackup);
+  $("askCompanion").addEventListener("click", answerCompanion);
 }
 init();
 
