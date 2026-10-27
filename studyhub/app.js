@@ -401,7 +401,7 @@ function preparedNoteFor(subject, chapter) {
   const subjectNotes = window.STUDY_NOTES && window.STUDY_NOTES[subject];
   if (!subjectNotes) return null;
   let key = chapter;
-  if (subject === "AI (417)") key = chapter.replace(/^Employability Skills:\\s*/, "");
+  if (subject === "AI (417)") key = chapter.replace(/^Employability Skills:\s*/, "");
   return subjectNotes[key] || null;
 }
 function fillGuideChapters() {
