@@ -415,3 +415,89 @@ a {color:var(--accent)}
 }
 
 @media (min-width:761px) { .export-short {display:none} }
+
+
+/* PURE BLACK STUDYHUB + EXAM SCOREBOARD + VISUAL NOTE READER */
+:root {
+  color-scheme:dark;
+  --bg:#000000;--surface:#08090b;--surface-soft:#101216;--text:#f5f7fa;
+  --muted:#a0a6b2;--line:#282a31;--accent:#67e4d0;--accent-soft:#102c2a;
+  --success:#7ee0ad;--warning:#f1c27a;--shadow:0 12px 34px rgba(0,0,0,.32);
+}
+:root[data-theme="dark"] {
+  color-scheme:dark;--bg:#000000;--surface:#08090b;--surface-soft:#101216;
+  --text:#f5f7fa;--muted:#a0a6b2;--line:#282a31;--accent:#67e4d0;
+  --accent-soft:#102c2a;--success:#7ee0ad;--warning:#f1c27a;
+}
+:root[data-theme="light"] {
+  color-scheme:dark;--bg:#000000;--surface:#08090b;--surface-soft:#101216;
+  --text:#f5f7fa;--muted:#a0a6b2;--line:#282a31;--accent:#67e4d0;
+  --accent-soft:#102c2a;--success:#7ee0ad;--warning:#f1c27a;
+}
+body {background-color:#000;background-image:linear-gradient(rgba(135,164,196,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(135,164,196,.035) 1px,transparent 1px);background-size:36px 36px}
+.exam-score-summary {display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:24px;margin:0 0 20px;background:linear-gradient(110deg,#090a0d,#101216);border-color:#272b33}
+.exam-score-summary-copy h2 {font-size:17px;margin:0}
+.exam-score-summary-copy p {margin:4px 0 0}
+.exam-score-summary-metrics {display:flex;gap:20px}
+.exam-score-summary-metrics>div {display:grid;gap:3px;min-width:74px}
+.exam-score-summary-metrics span {font-size:9px;letter-spacing:1.3px;color:var(--muted);font-weight:800}
+.exam-score-summary-metrics strong {font-size:24px;letter-spacing:-.8px}
+.exam-scores-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.exam-score-card {align-self:start}
+.exam-score-title {display:flex;align-items:flex-start;gap:12px;margin-bottom:16px}
+.exam-score-title h2 {margin:0 0 4px}
+.exam-score-title p {margin:0;line-height:1.5}
+.exam-score-mark {display:grid;place-items:center;flex:0 0 42px;height:42px;border:1px solid var(--line);border-radius:12px;background:var(--surface-soft);color:var(--accent);font-weight:800}
+.exam-total-result {border:1px solid #21413d;background:linear-gradient(110deg,#0c1c1b,#101216);border-radius:12px;padding:15px;margin-bottom:15px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:4px 12px}
+.exam-total-result span {font-size:10px;font-weight:750;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.exam-total-result strong {font-size:30px;line-height:1.1;color:var(--accent)}
+.exam-total-result small {grid-column:1/-1;color:var(--muted);font-size:10px}
+.score-subject-list {display:grid;gap:10px;margin-bottom:15px}
+.score-subject-row {display:grid;grid-template-columns:minmax(0,1.3fr) minmax(70px,.8fr) minmax(70px,.8fr);gap:7px;align-items:center;padding:9px;border:1px solid var(--line);border-radius:10px;background:#050608}
+.score-subject-name {font-size:11px;font-weight:750;overflow-wrap:anywhere}
+.score-subject-row label {display:grid;gap:4px;font-size:9px;color:var(--muted)}
+.score-subject-row input {min-width:0;width:100%;padding:8px 7px;background:#101216;border:1px solid #2c3038;border-radius:7px;color:var(--text);font-size:12px}
+.score-subject-row input:focus {outline:1px solid var(--accent);border-color:var(--accent)}
+.exam-score-card form>.button {width:100%}
+.exam-score-note {margin-top:18px;line-height:1.7}
+.guide-controls {grid-template-columns:minmax(170px,.75fr) minmax(150px,.7fr) minmax(220px,1.3fr)}
+.note-chapter-results {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:0 0 14px}
+.note-chapter-result {display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:9px;padding:10px 12px;min-width:0}
+.note-chapter-result:hover,.note-chapter-result.active {border-color:var(--accent);background:var(--accent-soft)}
+.note-chapter-result strong {font-size:11px;display:block;overflow-wrap:anywhere}
+.note-chapter-result small {display:block;font-size:9px;color:var(--muted);margin-top:2px}
+.note-chapter-result .note-number {color:var(--accent);font-size:10px;font-weight:800;flex:0 0 auto}
+.note-library-progress {font-size:10px;color:var(--muted);grid-column:1/-1;margin:0 0 2px}
+.guide-content {background:#090a0d;border:1px solid var(--line);border-radius:12px}
+.guide-content .guide-label {color:var(--accent)}
+.guide-content h3 {font-weight:800}
+.guide-content h4 {color:var(--accent)}
+.guide-content .guide-overview {max-width:850px}
+.concept-visual {margin:22px 0 8px;border:1px solid #252a31;border-radius:12px;overflow:hidden;background:#030405}
+.concept-visual figcaption {padding:11px 13px;border-top:1px solid #242930;font-size:10px;line-height:1.6;color:#a0a6b2}
+.concept-visual svg {display:block;width:100%;height:auto;max-height:230px}
+.note-recall-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:16px}
+.note-recall-card {padding:12px;border:1px solid var(--line);border-radius:9px;background:#0e1014}
+.note-recall-card strong {display:block;font-size:10px;color:var(--accent);margin-bottom:5px;letter-spacing:.3px}
+.note-recall-card span {display:block;font-size:10px;color:var(--muted);line-height:1.6}
+@media(max-width:950px) {
+  .exam-scores-grid {grid-template-columns:1fr}
+  .exam-score-summary {grid-template-columns:1fr auto}
+  .exam-score-summary-copy {grid-column:1/-1}
+  .guide-controls {grid-template-columns:repeat(2,minmax(0,1fr))}
+  .guide-controls .form-label:first-child {grid-column:1/-1}
+}
+@media(max-width:760px) {
+  .exam-score-summary {grid-template-columns:1fr;gap:14px}
+  .exam-score-summary-copy {grid-column:auto}
+  .exam-score-summary-metrics {justify-content:space-between}
+  .exam-score-summary>.button {width:100%}
+  .exam-scores-grid {grid-template-columns:1fr}
+  .score-subject-row {grid-template-columns:minmax(0,1.2fr) minmax(70px,.8fr) minmax(70px,.8fr);gap:5px;padding:7px}
+  .score-subject-name {font-size:10px}
+  .score-subject-row input {font-size:12px;padding:8px 5px}
+  .note-chapter-results {grid-template-columns:1fr}
+  .guide-controls {grid-template-columns:1fr}
+  .guide-controls .form-label:first-child {grid-column:auto}
+  .note-recall-grid {grid-template-columns:1fr}
+}
