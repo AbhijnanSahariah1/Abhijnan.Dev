@@ -98,3 +98,8 @@ h1,h2,h3,.brand{font-family:Georgia,"Times New Roman",serif;letter-spacing:-.025
 #studentName{text-transform:none}
 @media(max-width:900px){.personal-study-row{grid-template-columns:1fr}}
 @media(max-width:650px){.settings-panel #settingsForm{grid-template-columns:1fr}.settings-panel #settingsForm .form-actions{grid-column:auto}.week-bars{gap:6px}}
+
+/* Profile controls and stronger responsive dashboard hierarchy */
+.welcome-actions{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0}
+.welcome-actions .date-label{white-space:nowrap}
+@media(max-width:760px){.welcome-actions{align-items:flex-start;flex-direction:row;flex-wrap:wrap}.welcome-actions .date-label{align-self:center}}
