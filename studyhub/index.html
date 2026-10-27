@@ -2,14 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="A personal CBSE Class 10 study planner, syllabus tracker, notes library and practice log.">
+  <meta name="theme-color" content="#101722">
   <title>StudyHub — Class 10</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20261027">
 </head>
 <body>
-  <aside class="sidebar" id="sidebar">
-    <a class="brand" href="#" data-page="dashboard"><span class="brand-mark">S</span><span>StudyHub<small>CBSE · Class 10</small></span></a>
+  <div class="sidebar-scrim" id="sidebarScrim" aria-hidden="true"></div>
+  <aside class="sidebar" id="sidebar" aria-label="StudyHub navigation">
+    <a class="brand" href="#" data-page="dashboard"><span class="brand-mark">S<span>H</span></span><span>StudyHub<small>LEARN WITH INTENT</small></span></a>
     <nav class="nav" aria-label="Main navigation">
       <button class="nav-link active" data-page="dashboard"><span>⌂</span> Dashboard</button>
       <button class="nav-link" data-page="planner"><span>☷</span> Study planner</button>
@@ -27,18 +32,18 @@
 
   <main class="main">
     <header class="topbar">
-      <button class="mobile-menu" id="mobileMenu" aria-label="Toggle navigation">☰</button>
+      <button class="mobile-menu" id="mobileMenu" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false">☰</button>
       <label class="search-wrap"><span>⌕</span><input id="globalSearch" type="search" placeholder="Search chapters, notes or subjects"></label>
       <div class="top-actions">
         <button class="icon-button" id="themeToggle" title="Switch theme" aria-label="Switch theme">◐</button>
-        <button class="button button-outline" id="exportData">Export backup</button>
+        <button class="button button-outline export-button" id="exportData">Export backup</button>
       </div>
     </header>
 
     <section class="page active" id="page-dashboard">
       <div class="welcome-row">
-        <div><p class="eyebrow">YOUR STUDY SPACE</p><h1 id="greeting">Welcome back, Student.</h1><p class="muted">Keep it simple. Show up every day.</p></div>
-        <div class="welcome-actions"><button class="button button-outline button-small" data-open="settings">Edit profile & dates ↗</button><div class="date-label" id="todayLabel"></div></div>
+        <div><p class="eyebrow"><span class="eyebrow-dot"></span> YOUR STUDY SPACE</p><h1 id="greeting">Welcome back, Student.</h1><p class="muted">A calmer workspace for your biggest goals.</p></div>
+        <div class="welcome-actions"><button class="button button-outline button-small" data-open="settings">Edit profile & dates ↗</button><div class="date-pill"><span class="date-live-dot"></span><div class="date-label" id="todayLabel"></div></div></div>
       </div>
       <div class="exam-strip">
         <div><span class="exam-label">PRE-BOARDS</span><strong id="preboardCountdown">Set a date</strong><small id="preboardDateLabel">Add your exam date in settings</small></div>
@@ -186,6 +191,6 @@
   </main>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="notes-data.js"></script>
-  <script src="app.js"></script>
+  <script src="app.js?v=20261027"></script>
 </body>
 </html>
