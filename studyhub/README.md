@@ -34,3 +34,9 @@ For local use, this can run without a server. To publish, upload the folder to a
 - This version does not include user accounts, cloud database, AI API integration, or a complete official question bank.
 - The chapter list is a starter tracker, not a guarantee that every listed chapter is examinable in CBSE 2026–27. Verify the final syllabus with the official CBSE curriculum and school.
 - The Board date defaults to 15 February 2027 as requested. Update it when the official subject-wise timetable is confirmed.
+
+## Prepared notes library
+- `notes-data.js` includes original concise revision notes for every chapter currently listed in the subject tracker.
+- Notes include an overview, key ideas and a practice prompt, with options to copy them into personal notes, download as text, or schedule a revision task.
+- The note library is a learning aid and does not replace NCERT textbooks, teacher notes, or CBSE's final subject-wise syllabus.
+- GitHub Pages deploys both the personal portfolio and StudyHub folder from the repository root.
