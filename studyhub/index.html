@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="A personal CBSE Class 10 study planner, syllabus tracker, notes library and practice log.">
-  <meta name="theme-color" content="#101722">
+  <meta name="theme-color" content="#000000">
   <title>StudyHub — Class 10</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261027">
+  <link rel="stylesheet" href="style.css?v=20261028">
 </head>
 <body>
   <div class="sidebar-scrim" id="sidebarScrim" aria-hidden="true"></div>
@@ -20,6 +20,7 @@
       <button class="nav-link" data-page="planner"><span>☷</span> Study planner</button>
       <button class="nav-link" data-page="syllabus"><span>▦</span> Syllabus tracker</button>
       <button class="nav-link" data-page="notes"><span>▤</span> Notes library</button>
+      <button class="nav-link" data-page="exam-scores"><span>％</span> Exam scores</button>
       <button class="nav-link" data-page="practice"><span>✓</span> Practice & tests</button>
       <button class="nav-link" data-page="progress"><span>↗</span> Progress</button>
       <button class="nav-link" data-page="settings"><span>⚙</span> Settings</button>
@@ -51,6 +52,11 @@
         <div><span class="exam-label">CBSE BOARDS</span><strong id="boardCountdown">Set a date</strong><small id="boardDateLabel">15 February 2027</small></div>
         <button class="text-button" data-open="settings">Edit dates ↗</button>
       </div>
+      <section class="panel exam-score-summary">
+        <div class="exam-score-summary-copy"><p class="eyebrow">EXAM SCOREBOARD</p><h2>Your exam percentages</h2><p class="muted small-text">Track your pre-board and board marks in one place.</p></div>
+        <div class="exam-score-summary-metrics"><div><span>PRE-BOARDS</span><strong id="preboardOverallPercent">—</strong></div><div><span>BOARDS</span><strong id="boardOverallPercent">—</strong></div></div>
+        <button class="button button-outline button-small" data-open="exam-scores">Enter marks ↗</button>
+      </section>
       <div class="stats-grid">
         <article class="stat-card"><span class="stat-title">Syllabus completed</span><div class="stat-number" id="overallPercent">0%</div><div class="progress"><span id="overallProgressBar"></span></div><small id="chapterCountText">0 of 0 chapters completed</small></article>
         <article class="stat-card"><span class="stat-title">Chapters left</span><div class="stat-number" id="remainingCount">0</div><small>Across all tracked subjects</small></article>
@@ -131,9 +137,11 @@
           <span class="note-library-mark">Study<br>notes</span>
         </div>
         <div class="guide-controls">
+          <label class="form-label">Find a chapter<input id="noteSearch" type="search" placeholder="Search all notes by chapter or subject"></label>
           <label class="form-label">Subject<select id="guideSubject"></select></label>
           <label class="form-label">Chapter<select id="guideChapter"></select></label>
         </div>
+        <div id="noteChapterResults" class="note-chapter-results" aria-live="polite"></div>
         <article id="guideContent" class="guide-content"><p class="muted">Choose a subject and chapter to read the notes.</p></article>
         <div class="guide-actions">
           <button class="button button-primary" id="copyGuideToEditor">Copy to my notes editor</button>
@@ -152,6 +160,15 @@
         </section>
         <aside class="panel note-guide"><h2>Simple revision template</h2><ol><li><b>Main idea</b><br><span class="muted">Explain the concept in your own words.</span></li><li><b>Key facts and formulas</b><br><span class="muted">Keep essentials easy to scan.</span></li><li><b>Examples and diagrams</b><br><span class="muted">Add one useful example.</span></li><li><b>Mistakes to avoid</b><br><span class="muted">Record errors from practice.</span></li><li><b>Revise again</b><br><span class="muted">Write the next revision date.</span></li></ol></aside>
       </div>
+    </section>
+
+    <section class="page" id="page-exam-scores">
+      <div class="page-heading"><p class="eyebrow">YOUR TARGETS, YOUR PROGRESS</p><h1>Exam score tracker</h1><p class="muted">Enter marks for each subject to calculate your pre-board and board percentages. You can leave a subject blank until you have its result.</p></div>
+      <div class="exam-scores-grid">
+        <section class="panel exam-score-card"><div class="exam-score-title"><span class="exam-score-mark">01</span><div><h2>Pre-board results</h2><p class="muted small-text">Enter obtained marks and maximum marks for each subject.</p></div></div><div class="exam-total-result"><span>Current percentage</span><strong id="preboardScorePercent">—</strong><small id="preboardScoreSummary">No subject marks entered yet.</small></div><form id="preboardScoreForm" data-exam-form="preboard"><div id="preboardScoreFields" class="score-subject-list"></div><button class="button button-primary" type="submit">Save pre-board marks</button></form></section>
+        <section class="panel exam-score-card"><div class="exam-score-title"><span class="exam-score-mark">02</span><div><h2>Board results / target</h2><p class="muted small-text">Record actual board marks or use this section to model target marks.</p></div></div><div class="exam-total-result"><span>Current percentage</span><strong id="boardScorePercent">—</strong><small id="boardScoreSummary">No subject marks entered yet.</small></div><form id="boardScoreForm" data-exam-form="board"><div id="boardScoreFields" class="score-subject-list"></div><button class="button button-primary" type="submit">Save board marks</button></form></section>
+      </div>
+      <p class="muted small-text exam-score-note">Percentage is calculated from the subjects you have entered: total marks obtained ÷ total maximum marks × 100. This is a tracking estimate, not an official CBSE result or best-of-five calculation.</p>
     </section>
 
     <section class="page" id="page-practice">
@@ -191,6 +208,6 @@
   </main>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="notes-data.js"></script>
-  <script src="app.js?v=20261027"></script>
+  <script src="app.js?v=20261028"></script>
 </body>
 </html>
